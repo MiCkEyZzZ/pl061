@@ -1,0 +1,3090 @@
+<!DOCTYPE HTML>
+<html lang="ru" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>PrimeCell GPIO (PL061)</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Техническое руководство по контроллеру ввода-вывода общего назначения ARM PrimeCell PL061">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/pl061-4bbb8088.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-0f107864.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-aeed8491.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PrimeCell GPIO (PL061)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="arm-primecell-gpio-pl061"><a class="header" href="#arm-primecell-gpio-pl061">ARM PrimeCell GPIO (PL061)</a></h1>
+<h2 id="техническое-руководство"><a class="header" href="#техническое-руководство">Техническое руководство</a></h2>
+<p>PL061 — контроллер ввода-вывода общего назначения (GPIO) семейства
+ARM PrimeCell. Он предоставляет восемь программируемых линий, которые
+могут работать как входы или выходы, поддерживает маскируемые
+прерывания по уровню и фронту, а также альтернативный аппаратный
+режим управления.</p>
+<p>Эта книга — русскоязычное описание устройства, составленное по структуре
+официального руководства ARM <strong>DDI 0190B</strong> (ARM PrimeCell General Purpose
+Input/Output (PL061) Technical Reference Manual). Она не является
+официальным переводом ARM и не заменяет оригинальную документацию.</p>
+<h3 id="содержание"><a class="header" href="#содержание">Содержание</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Часть</th><th>О чём</th></tr>
+</thead>
+<tbody>
+<tr><td>Предисловие</td><td>Назначение, аудитория, соглашения, литература</td></tr>
+<tr><td>Глава 1</td><td>Общее описание и возможности контроллера</td></tr>
+<tr><td>Глава 2</td><td>Функциональное описание: регистры, прерывания, режимы</td></tr>
+<tr><td>Глава 3</td><td>Модель программиста: карта и описание регистров</td></tr>
+<tr><td>Глава 4</td><td>Тестовая модель: обвязка, scan, тестовые регистры</td></tr>
+<tr><td>Глава 5</td><td>Описание сигналов: APB, внутрикристальные, выводы</td></tr>
+<tr><td>Приложение A</td><td>Глоссарий</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="как-собрать"><a class="header" href="#как-собрать">Как собрать</a></h3>
+<pre><code class="language-console">$ mdbook build      # результат в ./book
+$ mdbook serve      # предпросмотр на http://localhost:3000
+</code></pre>
+<h3 id="базовые-сведения"><a class="header" href="#базовые-сведения">Базовые сведения</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Семейство</td><td>ARM PrimeCell</td></tr>
+<tr><td>Шина</td><td>AMBA APB, ведомое устройство</td></tr>
+<tr><td>Число линий</td><td>8</td></tr>
+<tr><td>Разрядность регистров</td><td>8 бит в 32-битных словах</td></tr>
+<tr><td>Прерывания</td><td>По уровню и по фронту, маскируемые</td></tr>
+<tr><td>Режимы</td><td>Программный и аппаратный</td></tr>
+<tr><td>Область адресов</td><td>4 КБ</td></tr>
+</tbody>
+</table>
+</div>
+<p>Смещения регистров указаны относительно базового адреса блока, который
+назначается при интеграции контроллера в систему на кристалле.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="о-руководстве"><a class="header" href="#о-руководстве">О руководстве</a></h1>
+<p>Это руководство описывает контроллер ввода-вывода общего назначения
+ARM PrimeCell PL061. Оно составлено по структуре официального
+документа ARM DDI 0190B и предназначено для инженеров, которые
+интегрируют контроллер в систему на кристалле или пишут для него
+драйвер.</p>
+<h2 id="что-описано"><a class="header" href="#что-описано">Что описано</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Глава</th><th>Содержание</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Назначение, возможности, состав блока</td></tr>
+<tr><td>2</td><td>Как устроен контроллер и как он работает</td></tr>
+<tr><td>3</td><td>Карта регистров и правила программирования</td></tr>
+<tr><td>4</td><td>Тестовые регистры и интеграционная проверка</td></tr>
+<tr><td>5</td><td>Сигналы шины, внутрикристальные сигналы и выводы</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="чего-здесь-нет"><a class="header" href="#чего-здесь-нет">Чего здесь нет</a></h2>
+<p>Руководство не описывает конкретную систему на кристалле: адреса,
+тактовые частоты, назначение выводов и схемы подключения задаются
+при интеграции. Не рассматриваются также вопросы электрических
+характеристик и временных параметров — их следует брать из
+документации на конкретный кристалл.</p>
+<h2 id="обозначения"><a class="header" href="#обозначения">Обозначения</a></h2>
+<p>Технические термины приведены в том виде, в каком они используются
+в документации ARM. Расшифровка — в глоссарии.</p>
+<p>Названия регистров, сигналов и полей выделены <code>моноширинным</code>
+шрифтом. Числа без префикса — десятичные, с префиксом <code>0x</code> —
+шестнадцатеричные, с префиксом <code>0b</code> — двоичные.</p>
+<h2 id="правовая-оговорка"><a class="header" href="#правовая-оговорка">Правовая оговорка</a></h2>
+<p>Текст написан самостоятельно и описывает технические факты устройства.
+Документ ARM DDI 0190B принадлежит ARM Limited; его дословный перевод
+здесь не приводится.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="аудитория-и-соглашения"><a class="header" href="#аудитория-и-соглашения">Аудитория и соглашения</a></h1>
+<h2 id="для-кого"><a class="header" href="#для-кого">Для кого</a></h2>
+<p>Руководство рассчитано на:</p>
+<ul>
+<li>разработчиков драйверов, которым нужен доступ к линиям GPIO
+и их прерываниям;</li>
+<li>инженеров, интегрирующих PL061 в систему на кристалле;</li>
+<li>специалистов по верификации, использующих тестовые регистры.</li>
+</ul>
+<p>Предполагается знакомство с шиной AMBA APB, понятиями регистра,
+маски прерывания и активного уровня сигнала.</p>
+<h2 id="соглашения"><a class="header" href="#соглашения">Соглашения</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Обозначение</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>RW</code></td><td>Регистр доступен для чтения и записи</td></tr>
+<tr><td><code>RO</code></td><td>Только для чтения</td></tr>
+<tr><td><code>WO</code></td><td>Только для записи</td></tr>
+<tr><td><code>—</code></td><td>Поле зарезервировано</td></tr>
+<tr><td><code>x</code></td><td>Значение не имеет смысла</td></tr>
+<tr><td><code>0x</code></td><td>Шестнадцатеричная запись</td></tr>
+<tr><td><code>0b</code></td><td>Двоичная запись</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="активные-уровни"><a class="header" href="#активные-уровни">Активные уровни</a></h2>
+<ul>
+<li>Сигналы AMBA APB активны высоким уровнем.</li>
+<li>Прерывания <code>GPIOINTR</code> и индивидуальные выходы активны высоким
+уровнем.</li>
+<li>Сигналы разрешения выводов <code>nGPEN</code> и <code>nGPAFEN</code> активны низким
+уровнем.</li>
+</ul>
+<h2 id="запись-регистров"><a class="header" href="#запись-регистров">Запись регистров</a></h2>
+<p>Все регистры расположены в 32-битных словах, но занимают младшие
+8 бит. Обращения должны быть 32-битными и выровненными по границе
+слова. Запись в зарезервированные биты не влияет на работу, чтение
+из них не определено.</p>
+<h2 id="адресация-данных"><a class="header" href="#адресация-данных">Адресация данных</a></h2>
+<p>Регистр данных занимает не одно слово, а 256 последовательных
+адресов. Младшие биты адреса <code>PADDR[9:2]</code> работают как маска:
+они определяют, какие биты данных участвуют в операции. Это
+ключевая особенность PL061, и ей посвящён отдельный раздел.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="дополнительная-литература"><a class="header" href="#дополнительная-литература">Дополнительная литература</a></h1>
+<h2 id="документы-arm"><a class="header" href="#документы-arm">Документы ARM</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Документ</th><th>О чём</th></tr>
+</thead>
+<tbody>
+<tr><td>ARM DDI 0190B</td><td>PrimeCell General Purpose Input/Output (PL061) Technical Reference Manual — первоисточник этого руководства</td></tr>
+<tr><td>AMBA Specification</td><td>Описание шины APB, протокола передач и сигналов</td></tr>
+<tr><td>PrimeCell Identification</td><td>Соглашения об идентификаторах компонентов PrimeCell</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="исходный-код"><a class="header" href="#исходный-код">Исходный код</a></h2>
+<p>Для практического изучения полезны открытые реализации:</p>
+<ul>
+<li>драйвер <code>drivers/gpio/gpio-pl061.c</code> ядра Linux;</li>
+<li>модель <code>hw/gpio/pl061.c</code> эмулятора QEMU;</li>
+<li>драйвер загрузчика U-Boot для плат с PL061.</li>
+</ul>
+<p>Они показывают, как на практике выполняются операции с маскированной
+адресацией данных, настраиваются прерывания и обрабатывается
+альтернативный режим.</p>
+<h2 id="смежные-темы"><a class="header" href="#смежные-темы">Смежные темы</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Тема</th><th>Зачем нужна</th></tr>
+</thead>
+<tbody>
+<tr><td>Шина APB</td><td>Все обращения к регистрам идут через неё</td></tr>
+<tr><td>Система прерываний</td><td>Подключение <code>GPIOINTR</code> к контроллеру прерываний</td></tr>
+<tr><td>Конфигурация выводов</td><td>Мультиплексирование и электрические параметры задаются на уровне кристалла</td></tr>
+<tr><td>Управление питанием</td><td>Отключение тактирования и поведение линий в спящем режиме</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="замечание-об-актуальности"><a class="header" href="#замечание-об-актуальности">Замечание об актуальности</a></h2>
+<p>Документ DDI 0190B описывает ревизию компонента, выпущенную в 2000 году.
+В более новых версиях документ мог быть переработан, однако набор
+регистров и их назначение у PL061 остаются совместимыми. Перед
+использованием в новом проекте стоит сверить ревизию с документацией
+на конкретную версию IP.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="11-о-контроллере-gpio-pl061"><a class="header" href="#11-о-контроллере-gpio-pl061">1.1. О контроллере GPIO (PL061)</a></h1>
+<p>PL061 — контроллер ввода-вывода общего назначения семейства
+ARM PrimeCell. Он даёт программному обеспечению восемь
+независимых линий, каждая из которых может быть входом или
+выходом.</p>
+<h2 id="состав-блока"><a class="header" href="#состав-блока">Состав блока</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Часть</th><th>Назначение</th></tr>
+</thead>
+<tbody>
+<tr><td>Интерфейс AMBA APB</td><td>Доступ к регистрам со стороны шины</td></tr>
+<tr><td>Регистр данных</td><td>Чтение состояния входов и запись значений выходов</td></tr>
+<tr><td>Регистр направления</td><td>Определяет, какие линии работают на вход, а какие на выход</td></tr>
+<tr><td>Блок прерываний</td><td>Обнаружение уровня или фронта, маскирование, объединение</td></tr>
+<tr><td>Блок выбора режима</td><td>Переключение линии между программным и аппаратным управлением</td></tr>
+<tr><td>Регистры идентификации</td><td>Постоянные значения для распознавания компонента</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="подключение"><a class="header" href="#подключение">Подключение</a></h2>
+<p>Контроллер занимает 4 КБ адресного пространства и подключается
+к шине APB как ведомое устройство. Восемь линий <code>GPIO[7:0]</code>
+выводятся на контактные площадки кристалла через двунаправленные
+буферы.</p>
+<pre><code class="language-text">        AMBA APB
+           │
+           ▼
+   ┌───────────────┐
+   │     PL061     │
+   │               │──── GPIOINTR ──▶ контроллер прерываний
+   │               │──── GPIO[7:0] ──▶ выводы
+   └───────────────┘
+</code></pre>
+<h2 id="основные-сценарии"><a class="header" href="#основные-сценарии">Основные сценарии</a></h2>
+<ul>
+<li><strong>Программный режим.</strong> Процессор задаёт направление через
+<code>GPIODIR</code>, пишет значения в <code>GPIODATA</code> и читает состояние линий
+оттуда же.</li>
+<li><strong>Прерывания.</strong> Линия настраивается на срабатывание по уровню
+или фронту; контроллер выставляет общий выход <code>GPIOINTR</code>.</li>
+<li><strong>Аппаратный режим.</strong> Управление линией передаётся внешнему блоку
+через <code>GPIOAFSEL</code>; регистры данных при этом игнорируются.</li>
+</ul>
+<h2 id="применение"><a class="header" href="#применение">Применение</a></h2>
+<p>PL061 типично используется для:</p>
+<ul>
+<li>кнопок и переключателей;</li>
+<li>светодиодов и исполнительных устройств;</li>
+<li>сигналов сброса и готовности периферии;</li>
+<li>прерываний от внешних микросхем;</li>
+<li>служебных линий, управляемых программно.</li>
+</ul>
+<h2 id="ограничения"><a class="header" href="#ограничения">Ограничения</a></h2>
+<ul>
+<li>Всего восемь линий; расширение выполняется несколькими
+экземплярами контроллера.</li>
+<li>Нет встроенной синхронизации входов: при работе от асинхронного
+источника нужно учитывать дребезг и метастабильность на уровне
+системы.</li>
+<li>Электрические параметры (ток, подтяжка, защита) определяются
+интеграцией, а не самим блоком.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="111-особенности"><a class="header" href="#111-особенности">1.1.1. Особенности</a></h1>
+<h2 id="линии-ввода-вывода"><a class="header" href="#линии-ввода-вывода">Линии ввода-вывода</a></h2>
+<ul>
+<li><strong>Восемь независимых линий</strong> <code>GPIO[7:0]</code>.</li>
+<li>Каждая линия независимо настраивается на вход или выход через
+<code>GPIODIR</code>.</li>
+<li>После сброса все линии работают как входы.</li>
+<li>Чтение <code>GPIODATA</code> возвращает состояние выводов независимо от
+выбранного направления.</li>
+</ul>
+<h2 id="доступ-к-данным"><a class="header" href="#доступ-к-данным">Доступ к данным</a></h2>
+<ul>
+<li><strong>Маскированная адресация.</strong> Регистр данных занимает 256 адресов;
+биты адреса <code>PADDR[9:2]</code> выбирают, какие биты изменять или читать.</li>
+<li>Это позволяет одному драйверу менять свои линии, не затрагивая
+остальные, без чтения-модификации-записи.</li>
+<li>Запись воздействует только на линии, настроенные как выходы.</li>
+</ul>
+<h2 id="прерывания"><a class="header" href="#прерывания">Прерывания</a></h2>
+<ul>
+<li>Обнаружение <strong>уровня</strong> или <strong>фронта</strong> — выбор через <code>GPIOIS</code>.</li>
+<li>Для фронта доступны <strong>оба направления</strong> (<code>GPIOIBE</code>) либо одно,
+заданное <code>GPIOIEV</code>.</li>
+<li>Индивидуальное маскирование каждой линии через <code>GPIOIE</code>.</li>
+<li>Сырой (<code>GPIORIS</code>) и маскированный (<code>GPIOMIS</code>) статус.</li>
+<li>Сброс флагов записью единицы в <code>GPIOIC</code>.</li>
+<li>Общий выход <code>GPIOINTR</code> и индивидуальные прерывания.</li>
+</ul>
+<h2 id="режимы-управления"><a class="header" href="#режимы-управления">Режимы управления</a></h2>
+<ul>
+<li><strong>Программный режим:</strong> линия управляется регистрами.</li>
+<li><strong>Аппаратный режим:</strong> линия управляется внешним блоком через
+<code>GPIOAFSEL</code>; регистры данных игнорируются.</li>
+<li>В аппаратном режиме значения линий всё равно доступны для чтения
+через <code>GPIODATA</code>.</li>
+</ul>
+<h2 id="идентификация"><a class="header" href="#идентификация">Идентификация</a></h2>
+<ul>
+<li>Регистры <code>GPIOPeriphID0-3</code> дают код компонента <code>0x061</code>.</li>
+<li>Регистры <code>GPIOPCellID0-3</code> дают идентификатор PrimeCell
+<code>0xB105F00D</code>.</li>
+</ul>
+<h2 id="тестирование"><a class="header" href="#тестирование">Тестирование</a></h2>
+<ul>
+<li>Встроенная логика интеграционного теста.</li>
+<li>Отдельные регистры управления тестом и доступа к входам-выходам.</li>
+<li>Поддержка scan-тестирования.</li>
+</ul>
+<h2 id="шина"><a class="header" href="#шина">Шина</a></h2>
+<ul>
+<li>Интерфейс AMBA APB, ведомое устройство.</li>
+<li>32-битные обращения, 8 значащих бит данных.</li>
+<li>Отдельный сброс интерфейса <code>PRESETn</code>.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="21-обзор-контроллера-gpio"><a class="header" href="#21-обзор-контроллера-gpio">2.1. Обзор контроллера GPIO</a></h1>
+<p>PL061 — ведомое устройство шины AMBA APB. Он предоставляет восемь
+программируемых линий, которыми можно управлять двумя способами:</p>
+<ul>
+<li><strong>программно</strong> — через регистры на шине APB;</li>
+<li><strong>аппаратно</strong> — через интерфейс аппаратного управления.</li>
+</ul>
+<h2 id="состав-регистров"><a class="header" href="#состав-регистров">Состав регистров</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Группа</th><th>Регистры</th></tr>
+</thead>
+<tbody>
+<tr><td>Направление данных</td><td><code>GPIODIR</code></td></tr>
+<tr><td>Данные</td><td><code>GPIODATA</code></td></tr>
+<tr><td>Управление прерываниями</td><td><code>GPIOIS</code>, <code>GPIOIBE</code>, <code>GPIOIEV</code>, <code>GPIOIE</code>, <code>GPIORIS</code>, <code>GPIOMIS</code>, <code>GPIOIC</code></td></tr>
+<tr><td>Выбор режима</td><td><code>GPIOAFSEL</code></td></tr>
+<tr><td>Идентификация</td><td><code>GPIOPeriphID0-3</code>, <code>GPIOPCellID0-3</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="структура"><a class="header" href="#структура">Структура</a></h2>
+<pre><code class="language-text">                 ┌──────────────────────────┐
+   AMBA APB ────▶│  Регистры и управление   │
+                 │                          │
+                 │  GPIODIR   GPIODATA      │
+                 │  Блок прерываний         │──▶ GPIOINTR
+                 │  GPIOAFSEL               │
+                 └───────┬──────────▲───────┘
+                         │          │
+                 аппаратный    программный
+                  интерфейс      тракт
+                         │          │
+                         ▼          ▼
+                   ┌──────────────────┐
+                   │  Выводы GPIO[7:0]│
+                   └──────────────────┘
+</code></pre>
+<h2 id="что-видит-процессор"><a class="header" href="#что-видит-процессор">Что видит процессор</a></h2>
+<p>Через APB доступны данные, управление и состояние. Каждая линия
+имеет свой бит во всех восьмибитных регистрах. Направление задаётся
+независимо для каждой линии, прерывания настраиваются и маскируются
+тоже независимо.</p>
+<h2 id="масштабирование"><a class="header" href="#масштабирование">Масштабирование</a></h2>
+<p>Ширина порта — восемь линий. Порт большей ширины (16, 24, 32 бита
+и более) получается объединением нескольких экземпляров контроллера.
+При этом каждый экземпляр сохраняет собственную карту регистров.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="211-регистр-направления-данных"><a class="header" href="#211-регистр-направления-данных">2.1.1. Регистр направления данных</a></h1>
+<p><code>GPIODIR</code> — восьмибитный регистр, задающий направление каждой линии.</p>
+<h2 id="значение-битов"><a class="header" href="#значение-битов">Значение битов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Направление</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Вход</td></tr>
+<tr><td>1</td><td>Выход</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="свойства"><a class="header" href="#свойства">Свойства</a></h2>
+<ul>
+<li>Каждый бит действует независимо: в одном порту могут быть
+одновременно входы и выходы.</li>
+<li>После сброса все биты равны нулю, то есть все линии работают
+как входы.</li>
+<li>В программном режиме регистр полностью определяет направление.</li>
+<li>В аппаратном режиме (при <code>GPIOAFSEL = 1</code> для данной линии)
+направление задаётся внешними сигналами <code>nGPAFEN</code>, а бит <code>GPIODIR</code>
+игнорируется.</li>
+</ul>
+<h2 id="пример"><a class="header" href="#пример">Пример</a></h2>
+<pre><code class="language-c">/* Линии 0–3 — выходы, 4–7 — входы */
+*(volatile uint32_t *)(GPIO_BASE + 0x400) = 0x0F;
+</code></pre>
+<h2 id="замечание"><a class="header" href="#замечание">Замечание</a></h2>
+<p>Перед изменением направления линии с выхода на вход стоит учесть
+внешнюю схему: если на выводе остаётся активный сигнал, переход
+в высокоимпедансное состояние может быть воспринят подключённым
+устройством как изменение уровня.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="212-регистр-данных"><a class="header" href="#212-регистр-данных">2.1.2. Регистр данных</a></h1>
+<p><code>GPIODATA</code> — регистр данных. Через него читается состояние выводов
+и задаются значения выходов.</p>
+<h2 id="адресация"><a class="header" href="#адресация">Адресация</a></h2>
+<p>Регистр занимает не один адрес, а 256 последовательных адресов
+от <code>base + 0x000</code> до <code>base + 0x3FC</code>. Младшие биты адреса
+<code>PADDR[9:2]</code> образуют маску.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Операция</th><th>Действие маски</th></tr>
+</thead>
+<tbody>
+<tr><td>Запись</td><td>Бит изменяется, только если соответствующий бит маски равен 1</td></tr>
+<tr><td>Чтение</td><td>Бит возвращается, только если соответствующий бит маски равен 1; иначе читается 0</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="пример-записи"><a class="header" href="#пример-записи">Пример записи</a></h2>
+<pre><code class="language-text">Адрес = GPIODATA + 0x098
+PADDR[9:2] = 0b0000100110
+Маска: биты 5, 2, 1
+Данные = 0xFB
+Результат: бит 5 = 1, бит 2 = 0, бит 1 = 1,
+           остальные биты не изменяются
+</code></pre>
+<h2 id="пример-чтения"><a class="header" href="#пример-чтения">Пример чтения</a></h2>
+<pre><code class="language-text">Адрес = GPIODATA + 0x0C4
+PADDR[9:2] = 0b0000110001
+Маска: биты 5, 4, 0
+Результат: возвращаются только биты 5, 4, 0,
+           биты 7, 6, 3, 2, 1 читаются как 0
+</code></pre>
+<h2 id="что-возвращает-чтение"><a class="header" href="#что-возвращает-чтение">Что возвращает чтение</a></h2>
+<ul>
+<li>Для линии-выхода — последнее записанное значение.</li>
+<li>Для линии-входа — текущий уровень на выводе.</li>
+</ul>
+<p>Это позволяет одним обращением прочитать состояние всех линий.
+Полный доступ без маски даёт адрес <code>base + 0x3FC</code>.</p>
+<h2 id="замечание-о-задержке"><a class="header" href="#замечание-о-задержке">Замечание о задержке</a></h2>
+<p>Данные на входах считаются потенциально асинхронными по отношению
+к <code>PCLK</code>. Перед чтением <code>GPIN</code> через <code>GPIODATA</code> должно пройти
+не менее двух передних фронтов <code>PCLK</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="213-регистры-управления-прерываниями"><a class="header" href="#213-регистры-управления-прерываниями">2.1.3. Регистры управления прерываниями</a></h1>
+<p>Контроллер умеет формировать прерывания от любой линии. Каждая линия
+настраивается независимо через свой бит в семи регистрах.</p>
+<h2 id="семь-регистров"><a class="header" href="#семь-регистров">Семь регистров</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Смещение</th><th>Назначение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOIS</code></td><td><code>0x404</code></td><td>Выбор: уровень или фронт</td></tr>
+<tr><td><code>GPIOIBE</code></td><td><code>0x408</code></td><td>Один фронт или оба</td></tr>
+<tr><td><code>GPIOIEV</code></td><td><code>0x40C</code></td><td>Полярность: высокий/низкий или rising/falling</td></tr>
+<tr><td><code>GPIOIE</code></td><td><code>0x410</code></td><td>Маска прерывания</td></tr>
+<tr><td><code>GPIORIS</code></td><td><code>0x414</code></td><td>Сырой статус</td></tr>
+<tr><td><code>GPIOMIS</code></td><td><code>0x418</code></td><td>Статус после маски</td></tr>
+<tr><td><code>GPIOIC</code></td><td><code>0x41C</code></td><td>Сброс флагов</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="цепочка-формирования"><a class="header" href="#цепочка-формирования">Цепочка формирования</a></h2>
+<pre><code class="language-text">уровень/фронт на линии
+        │
+        ▼
+   GPIOIS + GPIOIBE + GPIOIEV  ──▶ детектор
+        │
+        ▼
+     GPIORIS (сырой)
+        │
+        ▼ AND GPIOIE
+     GPIOMIS ──▶ GPIOINTR
+</code></pre>
+<h2 id="выходы"><a class="header" href="#выходы">Выходы</a></h2>
+<ul>
+<li><code>GPIOINTR</code> — общий выход, ИЛИ всех немаскированных линий.</li>
+<li><code>GPIOMIS[7:0]</code> — индивидуальные линии прерываний.</li>
+</ul>
+<h2 id="замечание-о-программировании"><a class="header" href="#замечание-о-программировании">Замечание о программировании</a></h2>
+<p>Настройку <code>GPIOIS</code>, <code>GPIOIBE</code> и <code>GPIOIEV</code> нужно выполнять при снятой
+маске в <code>GPIOIE</code>. Запись в регистры управления при разрешённых
+прерываниях может вызвать ложное срабатывание.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="214-регистр-выбора-режима"><a class="header" href="#214-регистр-выбора-режима">2.1.4. Регистр выбора режима</a></h1>
+<p><code>GPIOAFSEL</code> — регистр выбора режима управления линией.</p>
+<h2 id="значение-битов-1"><a class="header" href="#значение-битов-1">Значение битов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Режим</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Программный: линия управляется через APB</td></tr>
+<tr><td>1</td><td>Аппаратный: линия управляется внешним блоком</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="что-меняется"><a class="header" href="#что-меняется">Что меняется</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Программный режим</th><th>Аппаратный режим</th></tr>
+</thead>
+<tbody>
+<tr><td>Направление</td><td><code>GPIODIR</code></td><td><code>nGPAFEN</code></td></tr>
+<tr><td>Выходные данные</td><td><code>GPIODATA</code></td><td><code>GPAFOUT</code></td></tr>
+<tr><td>Входные данные</td><td><code>GPIN</code> → <code>GPIODATA</code></td><td><code>GPIN</code> → <code>GPAFOUT</code>/<code>GPAFIN</code></td></tr>
+<tr><td>Чтение через APB</td><td>Да</td><td>Да, состояние линии доступно</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="свойства-1"><a class="header" href="#свойства-1">Свойства</a></h2>
+<ul>
+<li>После сброса все биты равны нулю: все линии программные.</li>
+<li>Переключение можно делать для каждой линии отдельно.</li>
+<li>В аппаратном режиме регистры <code>GPIODIR</code> и <code>GPIODATA</code> для этой линии
+не действуют, но чтение <code>GPIODATA</code> по-прежнему возвращает уровень
+на выводе.</li>
+</ul>
+<h2 id="пример-1"><a class="header" href="#пример-1">Пример</a></h2>
+<pre><code class="language-c">/* Линии 7 и 6 — аппаратное управление, остальные — программное */
+*(volatile uint32_t *)(GPIO_BASE + 0x420) = 0xC0;
+</code></pre>
+<h2 id="типичное-применение"><a class="header" href="#типичное-применение">Типичное применение</a></h2>
+<p>Аппаратный режим используется, когда линией должен управлять
+специализированный блок (например, контроллер другого интерфейса),
+а процессор лишь изредка читает её состояние.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="215-регистры-идентификации"><a class="header" href="#215-регистры-идентификации">2.1.5. Регистры идентификации</a></h1>
+<p>Два набора регистров позволяют программно убедиться, что по данному
+адресу находится именно PL061.</p>
+<h2 id="идентификатор-периферии"><a class="header" href="#идентификатор-периферии">Идентификатор периферии</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Смещение</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOPeriphID0</code></td><td><code>0xFE0</code></td><td><code>0x61</code></td></tr>
+<tr><td><code>GPIOPeriphID1</code></td><td><code>0xFE4</code></td><td><code>0x10</code></td></tr>
+<tr><td><code>GPIOPeriphID2</code></td><td><code>0xFE8</code></td><td><code>0x04</code></td></tr>
+<tr><td><code>GPIOPeriphID3</code></td><td><code>0xFEC</code></td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>Составное слово: <code>0x00041061</code>.</p>
+<h2 id="идентификатор-primecell"><a class="header" href="#идентификатор-primecell">Идентификатор PrimeCell</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Смещение</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOPCellID0</code></td><td><code>0xFF0</code></td><td><code>0x0D</code></td></tr>
+<tr><td><code>GPIOPCellID1</code></td><td><code>0xFF4</code></td><td><code>0xF0</code></td></tr>
+<tr><td><code>GPIOPCellID2</code></td><td><code>0xFF8</code></td><td><code>0x05</code></td></tr>
+<tr><td><code>GPIOPCellID3</code></td><td><code>0xFFC</code></td><td><code>0xB1</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>Составное слово: <code>0xB105F00D</code>.</p>
+<h2 id="зачем-нужны-два-набора"><a class="header" href="#зачем-нужны-два-набора">Зачем нужны два набора</a></h2>
+<p><code>GPIOPCellID</code> указывает на семейство PrimeCell, а <code>GPIOPeriphID</code> —
+на конкретный компонент. Совместная проверка отсекает и периферию
+других семейств, и другие компоненты PrimeCell.</p>
+<h2 id="замечание-1"><a class="header" href="#замечание-1">Замечание</a></h2>
+<p>Регистры только для чтения, значения заданы в кремнии. Обращения
+должны быть 32-битными; значащие байты маскируются.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="22-функциональное-описание"><a class="header" href="#22-функциональное-описание">2.2. Функциональное описание</a></h1>
+<p>Функционально контроллер состоит из трёх частей:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Часть</th><th>Раздел</th></tr>
+</thead>
+<tbody>
+<tr><td>Интерфейс AMBA APB</td><td>2.2.1</td></tr>
+<tr><td>Логика обнаружения прерываний</td><td>2.2.2</td></tr>
+<tr><td>Управление режимом</td><td>2.2.3</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="блок-схема"><a class="header" href="#блок-схема">Блок-схема</a></h2>
+<pre><code class="language-text">        APB
+         │
+   ┌─────▼──────────────────────────────┐
+   │        Интерфейс APB               │
+   │  (регистры, декодирование адреса)  │
+   └──┬──────────────┬──────────────┬───┘
+      │              │              │
+      ▼              ▼              ▼
+ ┌─────────┐   ┌───────────┐  ┌──────────┐
+ │GPIODIR  │   │Прерывания │  │GPIOAFSEL │
+ │GPIODATA │   │ 7 рег.    │  │          │
+ └────┬────┘   └─────┬─────┘  └────┬─────┘
+      │              │             │
+      ▼              ▼             ▼
+ ┌──────────────────────────────────────┐
+ │     Мультиплексор режимов            │
+ └──────────────┬───────────────────────┘
+                │
+                ▼
+          выводы GPIO[7:0]
+</code></pre>
+<h2 id="тестовая-логика"><a class="header" href="#тестовая-логика">Тестовая логика</a></h2>
+<p>На схеме не показана тестовая логика. Она описана отдельно
+в главе 4 и не участвует в обычной работе контроллера.</p>
+<h2 id="взаимодействие-частей"><a class="header" href="#взаимодействие-частей">Взаимодействие частей</a></h2>
+<ul>
+<li>Интерфейс APB принимает обращения и обновляет регистры.</li>
+<li>Логика прерываний следит за линиями и вырабатывает <code>GPIOINTR</code>.</li>
+<li>Управление режимом выбирает источник сигналов для каждой линии:
+регистры или аппаратный интерфейс.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="221-интерфейс-amba-apb"><a class="header" href="#221-интерфейс-amba-apb">2.2.1. Интерфейс AMBA APB</a></h1>
+<p>AMBA APB — локальная вторичная шина, которая обеспечивает
+малопотребляющее расширение более быстрой шины AHB. APB объединяет
+периферийные устройства с узкой шиной, чтобы не загружать системную
+шину, и предоставляет доступ к регистрам через адресное пространство.</p>
+<h2 id="что-делает-интерфейс"><a class="header" href="#что-делает-интерфейс">Что делает интерфейс</a></h2>
+<ul>
+<li>Формирует сигналы чтения и записи для регистров управления,
+прерываний и данных.</li>
+<li>Формирует отдельное декодирование только для чтения — для доступа
+к регистрам идентификации.</li>
+<li>Содержит элементы хранения для регистров данных, направления,
+выбора режима, прерываний и идентификации.</li>
+</ul>
+<h2 id="особенности"><a class="header" href="#особенности">Особенности</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Свойство</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Роль</td><td>Ведомое устройство APB</td></tr>
+<tr><td>Область адресов</td><td>4 КБ</td></tr>
+<tr><td>Разрядность данных</td><td>8 значащих бит</td></tr>
+<tr><td>Доступ</td><td>32-битные обращения</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="следствия-для-программирования"><a class="header" href="#следствия-для-программирования">Следствия для программирования</a></h2>
+<ul>
+<li>Регистры расположены в 32-битных словах, но используют младший
+байт.</li>
+<li>Регистр данных занимает 256 слов: маска адреса формируется внутри
+интерфейса.</li>
+<li>Обращения к регистрам идентификации должны быть 32-битными
+(<code>LDR</code>/<code>STR</code>), даже если значение 8-битное.</li>
+</ul>
+<h2 id="почему-apb"><a class="header" href="#почему-apb">Почему APB</a></h2>
+<p>APB требует меньше сигналов и потребляет меньше энергии, чем AHB,
+поэтому хорошо подходит для медленной периферии. Платой является
+более низкая пропускная способность, что для GPIO не критично.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="222-логика-обнаружения-прерываний"><a class="header" href="#222-логика-обнаружения-прерываний">2.2.2. Логика обнаружения прерываний</a></h1>
+<p>Контроллер формирует маскируемые прерывания по уровню или по
+переходу на любой из восьми линий. Выход <code>GPIOINTR</code> сообщает
+контроллеру прерываний, что сработала одна или несколько линий.</p>
+<h2 id="возможности"><a class="header" href="#возможности">Возможности</a></h2>
+<ul>
+<li>Генерация по изменению уровня, по одному фронту или по обоим
+фронтам.</li>
+<li>Программируемый выбор полярности и фронта.</li>
+<li>Чтение сырого и маскированного статуса.</li>
+<li>Разрешение и запрет каждой линии отдельно.</li>
+<li>Сброс флагов записью.</li>
+</ul>
+<h2 id="регистры-цепочки"><a class="header" href="#регистры-цепочки">Регистры цепочки</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Роль</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOIS</code></td><td>Уровень или фронт</td></tr>
+<tr><td><code>GPIOIBE</code></td><td>Один фронт или оба</td></tr>
+<tr><td><code>GPIOIEV</code></td><td>Полярность события</td></tr>
+<tr><td><code>GPIOIE</code></td><td>Маска</td></tr>
+<tr><td><code>GPIORIS</code></td><td>Сырой статус</td></tr>
+<tr><td><code>GPIOMIS</code></td><td>Статус после маски</td></tr>
+<tr><td><code>GPIOIC</code></td><td>Сброс</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="выходные-сигналы"><a class="header" href="#выходные-сигналы">Выходные сигналы</a></h2>
+<ul>
+<li><strong><code>GPIOMIS[7:0]</code></strong> — по одному сигналу на линию, после маски.</li>
+<li><strong><code>GPIOINTR</code></strong> — ИЛИ всех линий <code>GPIOMIS</code>.</li>
+</ul>
+<h2 id="комбинация-условий"><a class="header" href="#комбинация-условий">Комбинация условий</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>GPIOIS</code></th><th><code>GPIOIBE</code></th><th><code>GPIOIEV</code></th><th>Событие</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>0</td><td>0</td><td>Отрицательный фронт</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>Положительный фронт</td></tr>
+<tr><td>0</td><td>1</td><td>x</td><td>Любой фронт</td></tr>
+<tr><td>1</td><td>x</td><td>0</td><td>Низкий уровень</td></tr>
+<tr><td>1</td><td>x</td><td>1</td><td>Высокий уровень</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>x</code> означает, что бит не влияет на результат.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="223-управление-режимом"><a class="header" href="#223-управление-режимом">2.2.3. Управление режимом</a></h1>
+<p>Линией можно управлять программно через APB или аппаратно через
+интерфейс аппаратного управления. Режим каждой линии выбирается
+битом регистра <code>GPIOAFSEL</code>.</p>
+<h2 id="программный-режим"><a class="header" href="#программный-режим">Программный режим</a></h2>
+<p>При <code>GPIOAFSEL[n] = 0</code>:</p>
+<ul>
+<li>направление задаёт <code>GPIODIR[n]</code>;</li>
+<li>запись данных идёт через <code>GPIODATA</code>;</li>
+<li>чтение состояния доступно через <code>GPIODATA</code>.</li>
+</ul>
+<p>Это режим по умолчанию после сброса.</p>
+<h2 id="аппаратный-режим"><a class="header" href="#аппаратный-режим">Аппаратный режим</a></h2>
+<p>При <code>GPIOAFSEL[n] = 1</code>:</p>
+<ul>
+<li>направление задаётся сигналом <code>nGPAFEN[n]</code>;</li>
+<li>выходные данные берутся из <code>GPAFOUT[n]</code>;</li>
+<li>входные данные выдаются на <code>GPAFIN[n]</code>;</li>
+<li>состояние линии по-прежнему можно прочитать через <code>GPIODATA</code>.</li>
+</ul>
+<p>Регистры <code>GPIODIR</code> и <code>GPIODATA</code> для этой линии не действуют.</p>
+<h2 id="мультиплексор"><a class="header" href="#мультиплексор">Мультиплексор</a></h2>
+<pre><code class="language-text">GPIODIR ─────┐
+             ├──▶ nGPEN
+nGPAFEN ─────┘
+
+GPIODATA ────┐
+             ├──▶ GPOUT
+GPAFOUT ─────┘
+
+GPIN ────────┼──▶ GPIODATA (чтение)
+             └──▶ GPAFIN
+</code></pre>
+<h2 id="когда-нужен-аппаратный-режим"><a class="header" href="#когда-нужен-аппаратный-режим">Когда нужен аппаратный режим</a></h2>
+<ul>
+<li>Линия управляется другим периферийным блоком.</li>
+<li>Нужна работа без участия процессора.</li>
+<li>Требуется переключение функций вывода в зависимости от
+конфигурации системы.</li>
+</ul>
+<h2 id="замечание-2"><a class="header" href="#замечание-2">Замечание</a></h2>
+<p>В аппаратном режиме сигнал <code>GPAFIN</code> для входов и <code>GPAFOUT</code> для
+выходов должны быть подключены или зафиксированы. Неиспользуемые
+входы <code>nGPAFEN</code> следует привязать к высокому уровню.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="23-работа-контроллера"><a class="header" href="#23-работа-контроллера">2.3. Работа контроллера</a></h1>
+<p>В этом разделе описано поведение контроллера после сброса,
+при конфигурировании, при работе линий, прерываний и выборе режима.</p>
+<h2 id="порядок-изложения"><a class="header" href="#порядок-изложения">Порядок изложения</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Раздел</th><th>Тема</th></tr>
+</thead>
+<tbody>
+<tr><td>2.3.1</td><td>Сброс интерфейса</td></tr>
+<tr><td>2.3.2</td><td>Конфигурирование интерфейса</td></tr>
+<tr><td>2.3.3</td><td>Работа линий ввода-вывода</td></tr>
+<tr><td>2.3.4</td><td>Работа прерываний</td></tr>
+<tr><td>2.3.5</td><td>Управление режимом</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="типичная-последовательность-запуска"><a class="header" href="#типичная-последовательность-запуска">Типичная последовательность запуска</a></h2>
+<pre><code class="language-text">1. Снять сброс.
+2. Настроить направление линий (GPIODIR).
+3. При необходимости настроить прерывания:
+   GPIOIS → GPIOIBE → GPIOIEV → три такта → GPIOIC = 0xFF → GPIOIE.
+4. Записать начальные значения выходов (GPIODATA).
+5. Включить нужные линии в GPIOAFSEL, если требуется аппаратный режим.
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="231-сброс-интерфейса"><a class="header" href="#231-сброс-интерфейса">2.3.1. Сброс интерфейса</a></h1>
+<p>При низком уровне на входе сброса все регистры блока обнуляются.</p>
+<h2 id="что-происходит"><a class="header" href="#что-происходит">Что происходит</a></h2>
+<ul>
+<li>Выходные драйверы линий отключаются, и выводы переходят
+в высокоимпедансное состояние.</li>
+<li>Все линии конфигурируются как входы (<code>GPIODIR = 0x00</code>).</li>
+<li>Прерывания запрещены (<code>GPIOIE = 0x00</code>).</li>
+<li>Сырые флаги сброшены (<code>GPIORIS = 0x00</code>).</li>
+<li>Выбран режим обнаружения по фронту (<code>GPIOIS = 0x00</code>).</li>
+<li><code>GPIOAFSEL = 0x00</code>: все линии программные.</li>
+</ul>
+<h2 id="следствия"><a class="header" href="#следствия">Следствия</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Последствие</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Линии — входы</td><td>Внешние устройства не получают сигналов от контроллера</td></tr>
+<tr><td>Выходные драйверы выключены</td><td>Нет конфликта с внешними источниками</td></tr>
+<tr><td>Прерывания запрещены</td><td>Нет ложных срабатываний при инициализации</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="важно"><a class="header" href="#важно">Важно</a></h2>
+<p>Сброс не влияет на внешние сигналы, подключённые к линиям.
+Если на выводе присутствует активный уровень, он будет виден
+при чтении <code>GPIODATA</code>, но прерывание не сформируется, пока не
+разрешено в <code>GPIOIE</code>.</p>
+<p>После снятия сброса рекомендуется:</p>
+<ol>
+<li>Прочитать <code>GPIODATA</code> и зафиксировать исходное состояние линий.</li>
+<li>Настроить направление.</li>
+<li>Только затем разрешать прерывания.</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="232-конфигурирование-интерфейса"><a class="header" href="#232-конфигурирование-интерфейса">2.3.2. Конфигурирование интерфейса</a></h1>
+<p>При установке <code>PRESETn</code> в низкий уровень контроллер переходит
+в исходное состояние:</p>
+<ul>
+<li>прерывания выбранной линии запрещаются сбросом бита в <code>GPIOIE</code>;</li>
+<li>все регистры обнуляются;</li>
+<li>входы и выходы настраиваются как входы;</li>
+<li>все прерывания наружу замаскированы;</li>
+<li>сырые флаги прерываний сброшены;</li>
+<li>источником выбран передний фронт (<code>GPIOIS = 0</code>).</li>
+</ul>
+<h2 id="рекомендуемая-последовательность"><a class="header" href="#рекомендуемая-последовательность">Рекомендуемая последовательность</a></h2>
+<p>Чтобы избежать ложных прерываний при настройке фронтов:</p>
+<pre><code class="language-text">1. Запрограммировать GPIOIBE — один фронт или оба.
+2. Запрограммировать GPIOIEV — если выбран один фронт.
+3. Запрограммировать GPIOIS — выбрать фронт.
+4. Подать три такта PCLK, чтобы очистить конвейер прерываний.
+5. Убедиться, что GPIN[7:0] стабильны всё это время.
+6. Сбросить все флаги: записать 0xFF в GPIOIC.
+7. Разрешить прерывания: записать нужные биты в GPIOIE.
+</code></pre>
+<h2 id="почему-три-такта"><a class="header" href="#почему-три-такта">Почему три такта</a></h2>
+<p>Логика обнаружения фронта содержит конвейер. После изменения
+настроек ему нужно время, чтобы прийти в согласованное состояние.
+Без выдержки возможны ложные срабатывания от старой конфигурации.</p>
+<h2 id="почему-сброс-через-gpioic"><a class="header" href="#почему-сброс-через-gpioic">Почему сброс через GPIOIC</a></h2>
+<p>Флаги, накопленные во время настройки, иначе приведут
+к немедленному прерыванию сразу после записи в <code>GPIOIE</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="233-работа-линий-ввода-вывода"><a class="header" href="#233-работа-линий-ввода-вывода">2.3.3. Работа линий ввода-вывода</a></h1>
+<p>Контроллер содержит восемь программируемых линий. В программном
+режиме данные и управление берутся из регистра данных и регистра
+направления.</p>
+<h2 id="чтение"><a class="header" href="#чтение">Чтение</a></h2>
+<p>При чтении регистр данных содержит текущее состояние выводов
+независимо от того, настроены они как входы или как выходы.
+Для выхода возвращается последнее записанное значение.</p>
+<h2 id="запись"><a class="header" href="#запись">Запись</a></h2>
+<p>Запись в регистр данных воздействует только на линии, настроенные
+как выходы. Линии-входы не изменяются.</p>
+<h2 id="маска-адреса"><a class="header" href="#маска-адреса">Маска адреса</a></h2>
+<p>Чтобы разные драйверы могли менять свои биты, не затрагивая чужие,
+адресная шина используется как маска. Регистр данных занимает
+256 адресов, маска — <code>PADDR[9:2]</code>.</p>
+<p><strong>Запись.</strong> Если бит адреса, связанный с битом данных, равен 1,
+значение бита изменяется. Если 0 — бит остаётся прежним.</p>
+<p><strong>Чтение.</strong> Если бит адреса равен 1, соответствующий бит данных
+читается. Если 0 — читается ноль, независимо от состояния линии.</p>
+<h2 id="пример-записи-1"><a class="header" href="#пример-записи-1">Пример записи</a></h2>
+<pre><code class="language-text">GPIODATA + 0x098 = 0b000010011000
+PADDR[9:2] = 0b0000100110
+Записываем 0xFB:
+  бит 5 → 1
+  бит 2 → 0
+  бит 1 → 1
+  остальные не меняются
+</code></pre>
+<h2 id="пример-чтения-1"><a class="header" href="#пример-чтения-1">Пример чтения</a></h2>
+<pre><code class="language-text">GPIODATA + 0x0C4 = 0b000011000100
+PADDR[9:2] = 0b0000110001
+Возвращаются биты 5, 4, 0;
+биты 7, 6, 3, 2, 1 читаются как 0.
+</code></pre>
+<h2 id="направление"><a class="header" href="#направление">Направление</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>GPIODIR[n]</code></th><th>Направление</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Вход</td></tr>
+<tr><td>1</td><td>Выход</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="полный-доступ"><a class="header" href="#полный-доступ">Полный доступ</a></h2>
+<p>Адрес <code>GPIODATA + 0x3FC</code> соответствует маске <code>0xFF</code>: читаются
+и записываются все восемь бит.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="234-работа-прерываний"><a class="header" href="#234-работа-прерываний">2.3.4. Работа прерываний</a></h1>
+<p>Блок прерываний управляется семью регистрами. Они позволяют выбрать
+источник, полярность и свойства фронта для каждой линии.</p>
+<h2 id="выходы-1"><a class="header" href="#выходы-1">Выходы</a></h2>
+<p>При срабатывании одной или нескольких линий формируется общий выход
+<code>GPIOINTR</code>; индивидуальные прерывания доступны как <code>GPIOMIS[7:0]</code>.
+Оба варианта могут идти в контроллер прерываний.</p>
+<h2 id="фронт-и-уровень"><a class="header" href="#фронт-и-уровень">Фронт и уровень</a></h2>
+<ul>
+<li>Для прерывания по фронту программное обеспечение должно сбросить
+флаг, иначе новые события не будут замечены.</li>
+<li>Для прерывания по уровню предполагается, что внешний источник
+удерживает уровень достаточно долго, чтобы процессор успел
+его обработать.</li>
+</ul>
+<h2 id="три-регистра-настройки"><a class="header" href="#три-регистра-настройки">Три регистра настройки</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Что задаёт</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOIS</code></td><td>Уровень (1) или фронт (0)</td></tr>
+<tr><td><code>GPIOIBE</code></td><td>Оба фронта (1) или один (0)</td></tr>
+<tr><td><code>GPIOIEV</code></td><td>Полярность события</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="пример-передний-фронт-на-линии-2"><a class="header" href="#пример-передний-фронт-на-линии-2">Пример: передний фронт на линии 2</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Бит 2</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOIS</code></td><td>0</td><td>Фронт</td></tr>
+<tr><td><code>GPIOIBE</code></td><td>0</td><td>Один фронт</td></tr>
+<tr><td><code>GPIOIEV</code></td><td>1</td><td>Положительный фронт</td></tr>
+<tr><td><code>GPIOIE</code></td><td>1</td><td>Разрешено</td></tr>
+</tbody>
+</table>
+</div>
+<p>Остальные биты <code>GPIOIE</code> равны нулю, поэтому настройки прочих линий
+не важны.</p>
+<h2 id="замечание-3"><a class="header" href="#замечание-3">Замечание</a></h2>
+<p>Если бит в <code>GPIOIE</code> равен нулю, прерывание по этой линии запрещено
+независимо от остальных настроек. Настройку <code>GPIOIS</code>, <code>GPIOIBE</code>
+и <code>GPIOIEV</code> следует выполнять при снятом разрешении: запись в эти
+регистры при включённых прерываниях может вызвать ложное
+срабатывание.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="235-управление-режимом"><a class="header" href="#235-управление-режимом">2.3.5. Управление режимом</a></h1>
+<p>Линиями можно управлять через аппаратный интерфейс. Режим каждой
+линии выбирается регистром <code>GPIOAFSEL</code>.</p>
+<h2 id="что-происходит-при-аппаратном-режиме"><a class="header" href="#что-происходит-при-аппаратном-режиме">Что происходит при аппаратном режиме</a></h2>
+<p>Когда для линии включено аппаратное управление, сигналы данных
+и направления от регистров игнорируются. Передача данных и
+управления по этой линии выполняется внешним вспомогательным блоком.</p>
+<h2 id="таблица-конфигурации-выводов"><a class="header" href="#таблица-конфигурации-выводов">Таблица конфигурации выводов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Аппаратный режим</th><th>Программный режим</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOAFSEL</code></td><td>1</td><td>0</td></tr>
+<tr><td>Направление</td><td><code>nGPAFEN</code></td><td><code>GPIODIR</code></td></tr>
+<tr><td>Выходные данные</td><td><code>GPAFOUT</code></td><td><code>GPIODATA</code></td></tr>
+<tr><td>Входные данные</td><td><code>GPIN</code> → <code>GPAFIN</code></td><td><code>GPIN</code> → <code>GPIODATA</code></td></tr>
+<tr><td>Разрешение вывода</td><td><code>nGPEN</code></td><td><code>nGPEN</code> от <code>GPIODIR</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="аппаратный-режим-1"><a class="header" href="#аппаратный-режим-1">Аппаратный режим</a></h2>
+<p>Линии <code>XP[7:4]</code> в примере документации настроены на аппаратное
+управление.</p>
+<ul>
+<li><strong>Выходы</strong> (<code>nGPAFEN = 0</code>): данные берутся из <code>GPAFOUT[7:6]</code>
+и выдаются на выводы, а также возвращаются на <code>GPAFIN[7:6]</code>.</li>
+<li><strong>Входы</strong> (<code>nGPAFEN = 1</code>): данные с выводов передаются
+на <code>GPAFIN[5:4]</code>.</li>
+</ul>
+<p>Во всех случаях значения доступны для чтения через <code>GPIODATA</code>.</p>
+<h2 id="программный-режим-1"><a class="header" href="#программный-режим-1">Программный режим</a></h2>
+<p>Линии <code>XP[3:0]</code> настроены на программное управление.</p>
+<ul>
+<li><strong>Выходы</strong> (<code>GPIODIR = 1</code>): данные берутся из <code>GPIODATA[3:2]</code>.</li>
+<li><strong>Входы</strong> (<code>GPIODIR = 0</code>): данные с выводов читаются через
+<code>GPIODATA[1:0]</code>, но не выдаются на <code>GPAFIN</code>.</li>
+</ul>
+<p>Сигналы <code>GPAFIN</code> в программном режиме принудительно удерживаются
+на низком уровне для экономии энергии.</p>
+<h2 id="экономия-энергии"><a class="header" href="#экономия-энергии">Экономия энергии</a></h2>
+<p>Отключение пути к <code>GPAFIN</code> в программном режиме снижает
+переключения на внутренних линиях, когда аппаратное управление
+не используется.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="31-общие-сведения"><a class="header" href="#31-общие-сведения">3.1. Общие сведения</a></h1>
+<p>Базовый адрес контроллера не фиксирован: он назначается при
+интеграции. Смещения регистров относительно базового адреса
+постоянны.</p>
+<h2 id="правила-доступа"><a class="header" href="#правила-доступа">Правила доступа</a></h2>
+<ul>
+<li>Все обращения — 32-битные, выровненные по границе слова.</li>
+<li>Адрес регистра: <code>адрес = base + offset</code>.</li>
+<li>Регистры <code>RO</code> только читаются, запись игнорируется.</li>
+<li>Регистры <code>WO</code> только пишутся, чтение не имеет смысла.</li>
+<li>Зарезервированные биты при записи должны сохранять значение.</li>
+<li>Значащие биты занимают младший байт слова.</li>
+</ul>
+<h2 id="область-адресов"><a class="header" href="#область-адресов">Область адресов</a></h2>
+<p>Контроллер занимает 4 КБ.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Диапазон</th><th>Назначение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>0x000</code>–<code>0x3FC</code></td><td><code>GPIODATA</code>, 256 адресов с маской</td></tr>
+<tr><td><code>0x400</code>–<code>0x420</code></td><td>Регистры управления</td></tr>
+<tr><td><code>0x424</code>–<code>0xFCC</code></td><td>Резерв для будущих функций и теста</td></tr>
+<tr><td><code>0xFD0</code>–<code>0xFDC</code></td><td>Резерв для расширения идентификации</td></tr>
+<tr><td><code>0xFE0</code>–<code>0xFEC</code></td><td><code>GPIOPeriphID0-3</code></td></tr>
+<tr><td><code>0xFF0</code>–<code>0xFFC</code></td><td><code>GPIOPCellID0-3</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="особенность-gpiodata"><a class="header" href="#особенность-gpiodata">Особенность GPIODATA</a></h2>
+<p><code>GPIODATA</code> — не обычный регистр. Младшие биты адреса <code>PADDR[9:2]</code>
+работают как маска: они определяют, какие биты участвуют
+в операции. Поэтому одно и то же значение, записанное по разным
+адресам, даёт разный результат.</p>
+<h2 id="соглашение-об-именах"><a class="header" href="#соглашение-об-именах">Соглашение об именах</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Суффикс</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>DATA</code></td><td>Data — данные</td></tr>
+<tr><td><code>DIR</code></td><td>Direction — направление</td></tr>
+<tr><td><code>IS</code></td><td>Interrupt Sense — чувствительность</td></tr>
+<tr><td><code>IBE</code></td><td>Interrupt Both Edges — оба фронта</td></tr>
+<tr><td><code>IEV</code></td><td>Interrupt Event — событие</td></tr>
+<tr><td><code>IE</code></td><td>Interrupt Enable — разрешение</td></tr>
+<tr><td><code>RIS</code></td><td>Raw Interrupt Status — сырой статус</td></tr>
+<tr><td><code>MIS</code></td><td>Masked Interrupt Status — маскированный статус</td></tr>
+<tr><td><code>IC</code></td><td>Interrupt Clear — сброс</td></tr>
+<tr><td><code>AFSEL</code></td><td>Alternate Function Select — выбор режима</td></tr>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="32-сводка-регистров"><a class="header" href="#32-сводка-регистров">3.2. Сводка регистров</a></h1>
+<p>Все программно-доступные регистры контроллера приведены в таблице.
+Смещения указаны относительно базового адреса.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Смещение</th><th>Имя</th><th>Тип</th><th>Ширина</th><th>Сброс</th><th>Назначение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>0x000</code>–<code>0x3FC</code></td><td><code>GPIODATA</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Данные</td></tr>
+<tr><td><code>0x400</code></td><td><code>GPIODIR</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Направление</td></tr>
+<tr><td><code>0x404</code></td><td><code>GPIOIS</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Уровень или фронт</td></tr>
+<tr><td><code>0x408</code></td><td><code>GPIOIBE</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Один фронт или оба</td></tr>
+<tr><td><code>0x40C</code></td><td><code>GPIOIEV</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Событие</td></tr>
+<tr><td><code>0x410</code></td><td><code>GPIOIE</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Маска прерываний</td></tr>
+<tr><td><code>0x414</code></td><td><code>GPIORIS</code></td><td>RO</td><td>8</td><td><code>0x00</code></td><td>Сырой статус</td></tr>
+<tr><td><code>0x418</code></td><td><code>GPIOMIS</code></td><td>RO</td><td>8</td><td><code>0x00</code></td><td>Маскированный статус</td></tr>
+<tr><td><code>0x41C</code></td><td><code>GPIOIC</code></td><td>WO</td><td>8</td><td><code>0x00</code></td><td>Сброс прерываний</td></tr>
+<tr><td><code>0x420</code></td><td><code>GPIOAFSEL</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Выбор режима</td></tr>
+<tr><td><code>0xFE0</code></td><td><code>GPIOPeriphID0</code></td><td>RO</td><td>8</td><td><code>0x61</code></td><td>Идентификация, байт 0</td></tr>
+<tr><td><code>0xFE4</code></td><td><code>GPIOPeriphID1</code></td><td>RO</td><td>8</td><td><code>0x10</code></td><td>Идентификация, байт 1</td></tr>
+<tr><td><code>0xFE8</code></td><td><code>GPIOPeriphID2</code></td><td>RO</td><td>8</td><td><code>0x04</code></td><td>Идентификация, байт 2</td></tr>
+<tr><td><code>0xFEC</code></td><td><code>GPIOPeriphID3</code></td><td>RO</td><td>8</td><td><code>0x00</code></td><td>Идентификация, байт 3</td></tr>
+<tr><td><code>0xFF0</code></td><td><code>GPIOPCellID0</code></td><td>RO</td><td>8</td><td><code>0x0D</code></td><td>PrimeCell, байт 0</td></tr>
+<tr><td><code>0xFF4</code></td><td><code>GPIOPCellID1</code></td><td>RO</td><td>8</td><td><code>0xF0</code></td><td>PrimeCell, байт 1</td></tr>
+<tr><td><code>0xFF8</code></td><td><code>GPIOPCellID2</code></td><td>RO</td><td>8</td><td><code>0x05</code></td><td>PrimeCell, байт 2</td></tr>
+<tr><td><code>0xFFC</code></td><td><code>GPIOPCellID3</code></td><td>RO</td><td>8</td><td><code>0xB1</code></td><td>PrimeCell, байт 3</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="пояснения"><a class="header" href="#пояснения">Пояснения</a></h2>
+<p><strong>Ширина.</strong> Указана ширина используемой части. Все регистры
+расположены в 32-битных словах, но занимают младшие 8 бит.</p>
+<p><strong><code>GPIODATA</code>.</strong> Занимает 256 слов. Адрес внутри диапазона задаёт
+маску операции.</p>
+<p><strong><code>GPIOIC</code>.</strong> Только для записи: чтение не возвращает осмысленного
+значения.</p>
+<p><strong>Идентификация.</strong> Регистры только для чтения, значения заданы
+в кремнии. Составное слово периферии — <code>0x00041061</code>, PrimeCell —
+<code>0xB105F00D</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="33-описание-регистров"><a class="header" href="#33-описание-регистров">3.3. Описание регистров</a></h1>
+<p>В разделе описан каждый регистр: назначение, поля и правила
+обращения. Тестовые регистры описаны отдельно в главе 4.</p>
+<h2 id="порядок-изложения-1"><a class="header" href="#порядок-изложения-1">Порядок изложения</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Раздел</th><th>Регистр</th></tr>
+</thead>
+<tbody>
+<tr><td>3.3.1</td><td><code>GPIODATA</code> — данные</td></tr>
+<tr><td>3.3.2</td><td><code>GPIODIR</code> — направление</td></tr>
+<tr><td>3.3.3</td><td><code>GPIOIS</code> — чувствительность</td></tr>
+<tr><td>3.3.4</td><td><code>GPIOIBE</code> — оба фронта</td></tr>
+<tr><td>3.3.5</td><td><code>GPIOIEV</code> — событие</td></tr>
+<tr><td>3.3.6</td><td><code>GPIOIE</code> — маска</td></tr>
+<tr><td>3.3.7</td><td><code>GPIORIS</code> — сырой статус</td></tr>
+<tr><td>3.3.8</td><td><code>GPIOMIS</code> — маскированный статус</td></tr>
+<tr><td>3.3.9</td><td><code>GPIOIC</code> — сброс</td></tr>
+<tr><td>3.3.10</td><td><code>GPIOAFSEL</code> — режим</td></tr>
+<tr><td>3.3.11</td><td><code>GPIOPeriphID0-3</code> — идентификация периферии</td></tr>
+<tr><td>3.3.12</td><td><code>GPIOPCellID0-3</code> — идентификация PrimeCell</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="общие-свойства"><a class="header" href="#общие-свойства">Общие свойства</a></h2>
+<ul>
+<li>Каждый бит регистра соответствует одной линии <code>GPIO[n]</code>.</li>
+<li>После сброса все регистры равны нулю.</li>
+<li>Разрядность всех полей — 8 бит.</li>
+<li>Зарезервированные биты читаются как нули или не определены.</li>
+</ul>
+<h2 id="порядок-настройки-прерываний"><a class="header" href="#порядок-настройки-прерываний">Порядок настройки прерываний</a></h2>
+<pre><code class="language-text">GPIOIS → GPIOIBE → GPIOIEV → выдержка → GPIOIC → GPIOIE
+</code></pre>
+<p>Соблюдение порядка исключает ложные срабатывания. Подробнее —
+в разделе 2.3.2.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="331-регистр-данных-gpiodata"><a class="header" href="#331-регистр-данных-gpiodata">3.3.1. Регистр данных GPIODATA</a></h1>
+<p><code>GPIODATA</code> — регистр данных. В программном режиме записанные
+значения выдаются на выводы, настроенные как выходы.</p>
+<h2 id="расположение"><a class="header" href="#расположение">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Диапазон</td><td><code>0x000</code>–<code>0x3FC</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="маска-адреса-1"><a class="header" href="#маска-адреса-1">Маска адреса</a></h2>
+<p>Запись возможна только в те биты, для которых соответствующий бит
+<code>PADDR[9:2]</code> равен 1. Остальные биты не изменяются.</p>
+<p>При чтении биты, у которых маска равна 1, возвращаются; остальные
+читаются как 0.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Адрес</th><th><code>PADDR[9:2]</code></th><th>Доступные биты</th></tr>
+</thead>
+<tbody>
+<tr><td><code>+0x004</code></td><td><code>0b0000000001</code></td><td>0</td></tr>
+<tr><td><code>+0x008</code></td><td><code>0b0000000010</code></td><td>1</td></tr>
+<tr><td><code>+0x098</code></td><td><code>0b0000100110</code></td><td>5, 2, 1</td></tr>
+<tr><td><code>+0x0C4</code></td><td><code>0b0000110001</code></td><td>5, 4, 0</td></tr>
+<tr><td><code>+0x3FC</code></td><td><code>0b1111111111</code></td><td>все</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля"><a class="header" href="#битовые-поля">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Биты</th><th>Имя</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td>7:0</td><td><code>DATA</code></td><td>Входные или выходные данные</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="чтение-1"><a class="header" href="#чтение-1">Чтение</a></h2>
+<ul>
+<li>Для выхода возвращается последнее записанное значение.</li>
+<li>Для входа возвращается текущий уровень на выводе.</li>
+</ul>
+<h2 id="пример-2"><a class="header" href="#пример-2">Пример</a></h2>
+<pre><code class="language-c">#define GPIO_DATA   (GPIO_BASE + 0x000)
+
+/* Установить только бит 3, не трогая остальные:
+   адрес +0x00C даёт маску с битом 3 */
+*(volatile uint32_t *)(GPIO_BASE + 0x00C) = 1u &lt;&lt; 3;
+
+/* Прочитать все линии */
+uint32_t all = *(volatile uint32_t *)(GPIO_BASE + 0x3FC);
+</code></pre>
+<h2 id="замечание-4"><a class="header" href="#замечание-4">Замечание</a></h2>
+<p>Запись по адресу с маской не требует чтения-модификации-записи.
+Это делает операцию атомарной по отношению к другим драйверам,
+работающим с соседними битами.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="332-направление-данных-gpiodir"><a class="header" href="#332-направление-данных-gpiodir">3.3.2. Направление данных GPIODIR</a></h1>
+<p><code>GPIODIR</code> задаёт направление каждой линии в программном режиме.</p>
+<h2 id="расположение-1"><a class="header" href="#расположение-1">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x400</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-1"><a class="header" href="#битовые-поля-1">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Линия — вход</td></tr>
+<tr><td>1</td><td>Линия — выход</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="свойства-2"><a class="header" href="#свойства-2">Свойства</a></h2>
+<ul>
+<li>После сброса все линии — входы.</li>
+<li>Бит действует только при <code>GPIOAFSEL[n] = 0</code>.</li>
+<li>Изменение направления не меняет значение в <code>GPIODATA</code>.</li>
+</ul>
+<h2 id="пример-3"><a class="header" href="#пример-3">Пример</a></h2>
+<pre><code class="language-c">#define GPIO_DIR    (GPIO_BASE + 0x400)
+
+/* 0–3 выходы, 4–7 входы */
+*(volatile uint32_t *)GPIO_DIR = 0x0F;
+</code></pre>
+<h2 id="замечание-о-переключении"><a class="header" href="#замечание-о-переключении">Замечание о переключении</a></h2>
+<p>При переводе линии из выхода во вход выходной драйвер отключается,
+и вывод переходит в высокоимпедансное состояние. Если к линии
+подключена нагрузка, это может быть воспринято как изменение
+уровня. При необходимости внешнюю подтяжку следует предусмотреть
+на уровне схемы.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="333-чувствительность-gpiois"><a class="header" href="#333-чувствительность-gpiois">3.3.3. Чувствительность GPIOIS</a></h1>
+<p><code>GPIOIS</code> выбирает, по какому событию формируется прерывание:
+по уровню или по фронту.</p>
+<h2 id="расположение-2"><a class="header" href="#расположение-2">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x404</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-2"><a class="header" href="#битовые-поля-2">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Обнаружение фронта</td></tr>
+<tr><td>1</td><td>Обнаружение уровня</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="взаимодействие"><a class="header" href="#взаимодействие">Взаимодействие</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>GPIOIS</code></th><th><code>GPIOIBE</code></th><th><code>GPIOIEV</code></th><th>Событие</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>0</td><td>0</td><td>Отрицательный фронт</td></tr>
+<tr><td>0</td><td>0</td><td>1</td><td>Положительный фронт</td></tr>
+<tr><td>0</td><td>1</td><td>x</td><td>Любой фронт</td></tr>
+<tr><td>1</td><td>x</td><td>0</td><td>Низкий уровень</td></tr>
+<tr><td>1</td><td>x</td><td>1</td><td>Высокий уровень</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="пример-4"><a class="header" href="#пример-4">Пример</a></h2>
+<pre><code class="language-c">/* Линия 0 — по уровню, линия 1 — по фронту */
+*(volatile uint32_t *)(GPIO_BASE + 0x404) = 0x01;
+</code></pre>
+<h2 id="замечание-5"><a class="header" href="#замечание-5">Замечание</a></h2>
+<p>После сброса выбран фронт. Если требуется уровень, бит нужно
+установить явно. Изменять регистр следует при снятой маске
+в <code>GPIOIE</code>, чтобы не вызвать ложное прерывание.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="334-оба-фронта-gpioibe"><a class="header" href="#334-оба-фронта-gpioibe">3.3.4. Оба фронта GPIOIBE</a></h1>
+<p><code>GPIOIBE</code> определяет, реагирует ли линия на оба фронта или только
+на один, выбранный в <code>GPIOIEV</code>.</p>
+<h2 id="расположение-3"><a class="header" href="#расположение-3">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x408</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-3"><a class="header" href="#битовые-поля-3">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Один фронт, направление задаёт <code>GPIOIEV</code></td></tr>
+<tr><td>1</td><td>Оба фронта</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="область-действия"><a class="header" href="#область-действия">Область действия</a></h2>
+<p>Регистр действует только для линий, у которых в <code>GPIOIS</code> выбран
+фронт. Для линий с обнаружением уровня бит <code>GPIOIBE</code> не имеет
+значения.</p>
+<h2 id="пример-5"><a class="header" href="#пример-5">Пример</a></h2>
+<pre><code class="language-c">/* Линия 2 реагирует на оба фронта */
+*(volatile uint32_t *)(GPIO_BASE + 0x408) = 1u &lt;&lt; 2;
+</code></pre>
+<h2 id="применение-1"><a class="header" href="#применение-1">Применение</a></h2>
+<p>Обнаружение обоих фронтов удобно для:</p>
+<ul>
+<li>счётчиков импульсов;</li>
+<li>кнопок, которые могут замыкаться и размыкаться;</li>
+<li>сигналов, у которых важен сам факт изменения.</li>
+</ul>
+<h2 id="замечание-6"><a class="header" href="#замечание-6">Замечание</a></h2>
+<p>При обоих фронтах бит <code>GPIOIEV</code> для этой линии игнорируется.
+Сброс флага всё равно выполняется через <code>GPIOIC</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="335-событие-gpioiev"><a class="header" href="#335-событие-gpioiev">3.3.5. Событие GPIOIEV</a></h1>
+<p><code>GPIOIEV</code> задаёт полярность события: какой фронт или уровень
+считается активным.</p>
+<h2 id="расположение-4"><a class="header" href="#расположение-4">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x40C</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-4"><a class="header" href="#битовые-поля-4">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>При фронте (<code>GPIOIS = 0</code>)</th><th>При уровне (<code>GPIOIS = 1</code>)</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Отрицательный фронт</td><td>Низкий уровень</td></tr>
+<tr><td>1</td><td>Положительный фронт</td><td>Высокий уровень</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="пример-6"><a class="header" href="#пример-6">Пример</a></h2>
+<pre><code class="language-c">/* Линия 2: положительный фронт / высокий уровень */
+*(volatile uint32_t *)(GPIO_BASE + 0x40C) = 1u &lt;&lt; 2;
+</code></pre>
+<h2 id="взаимодействие-с-gpioibe"><a class="header" href="#взаимодействие-с-gpioibe">Взаимодействие с GPIOIBE</a></h2>
+<p>Если для линии установлен бит в <code>GPIOIBE</code>, выбор фронта в <code>GPIOIEV</code>
+игнорируется: линия реагирует на оба фронта. Для уровня <code>GPIOIBE</code>
+не действует.</p>
+<h2 id="замечание-7"><a class="header" href="#замечание-7">Замечание</a></h2>
+<p>Настройку следует выполнять при снятой маске в <code>GPIOIE</code>. Иначе
+изменение полярности может быть воспринято как событие и вызвать
+прерывание.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="336-маска-прерываний-gpioie"><a class="header" href="#336-маска-прерываний-gpioie">3.3.6. Маска прерываний GPIOIE</a></h1>
+<p><code>GPIOIE</code> разрешает или запрещает прерывание от каждой линии.</p>
+<h2 id="расположение-5"><a class="header" href="#расположение-5">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x410</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-5"><a class="header" href="#битовые-поля-5">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Прерывание линии запрещено</td></tr>
+<tr><td>1</td><td>Прерывание линии разрешено</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="влияние"><a class="header" href="#влияние">Влияние</a></h2>
+<p>Установленный бит разрешает линии формировать:</p>
+<ul>
+<li>индивидуальный сигнал в <code>GPIOMIS[n]</code>;</li>
+<li>вклад в общий выход <code>GPIOINTR</code>.</li>
+</ul>
+<p>Снятый бит блокирует оба выхода, но не мешает <code>GPIORIS</code> фиксировать
+событие.</p>
+<h2 id="пример-7"><a class="header" href="#пример-7">Пример</a></h2>
+<pre><code class="language-c">/* Разрешить прерывания от линий 0 и 3 */
+*(volatile uint32_t *)(GPIO_BASE + 0x410) = (1u &lt;&lt; 0) | (1u &lt;&lt; 3);
+</code></pre>
+<h2 id="порядок-включения"><a class="header" href="#порядок-включения">Порядок включения</a></h2>
+<p>Разрешение следует выполнять последним шагом настройки:</p>
+<pre><code class="language-text">GPIOIS → GPIOIBE → GPIOIEV → выдержка → GPIOIC = 0xFF → GPIOIE
+</code></pre>
+<p>Так исключаются прерывания по событиям, накопленным во время
+конфигурирования.</p>
+<h2 id="после-сброса"><a class="header" href="#после-сброса">После сброса</a></h2>
+<p>Все биты равны нулю: прерывания запрещены. Это безопасное
+исходное состояние.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="337-сырой-статус-gpioris"><a class="header" href="#337-сырой-статус-gpioris">3.3.7. Сырой статус GPIORIS</a></h1>
+<p><code>GPIORIS</code> показывает состояние условий прерывания до применения
+маски.</p>
+<h2 id="расположение-6"><a class="header" href="#расположение-6">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x414</code></td></tr>
+<tr><td>Тип</td><td>RO</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-6"><a class="header" href="#битовые-поля-6">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Условие прерывания линии не выполнено</td></tr>
+<tr><td>1</td><td>Условие прерывания линии выполнено</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="что-означает"><a class="header" href="#что-означает">Что означает</a></h2>
+<p>Бит устанавливается, когда линия удовлетворила всем требованиям
+детектора (<code>GPIOIS</code>, <code>GPIOIBE</code>, <code>GPIOIEV</code>), ещё до проверки маски
+<code>GPIOIE</code>. Поэтому событие видно в <code>GPIORIS</code> даже при запрещённом
+прерывании.</p>
+<h2 id="связь-с-gpiomis"><a class="header" href="#связь-с-gpiomis">Связь с GPIOMIS</a></h2>
+<pre><code class="language-text">GPIOMIS = GPIORIS AND GPIOIE
+</code></pre>
+<h2 id="сброс"><a class="header" href="#сброс">Сброс</a></h2>
+<p>Регистр только для чтения. Флаги снимаются записью единицы
+в соответствующий бит <code>GPIOIC</code> либо общим сбросом.</p>
+<h2 id="применение-2"><a class="header" href="#применение-2">Применение</a></h2>
+<ul>
+<li>Опрос событий без разрешения прерываний.</li>
+<li>Диагностика: видно, что линия срабатывала, даже если прерывание
+было замаскировано.</li>
+<li>Проверка настройки детектора до включения <code>GPIOIE</code>.</li>
+</ul>
+<pre><code class="language-c">uint32_t raw = *(volatile uint32_t *)(GPIO_BASE + 0x414);
+if (raw &amp; 1u)
+    /* линия 0 фиксировала событие */
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="338-маскированный-статус-gpiomis"><a class="header" href="#338-маскированный-статус-gpiomis">3.3.8. Маскированный статус GPIOMIS</a></h1>
+<p><code>GPIOMIS</code> содержит состояние прерываний после применения маски.
+Именно эти значения выдаются на индивидуальные линии и участвуют
+в формировании <code>GPIOINTR</code>.</p>
+<h2 id="расположение-7"><a class="header" href="#расположение-7">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x418</code></td></tr>
+<tr><td>Тип</td><td>RO</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-7"><a class="header" href="#битовые-поля-7">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Линия не выдаёт прерывание</td></tr>
+<tr><td>1</td><td>Линия выдаёт прерывание</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="вычисление"><a class="header" href="#вычисление">Вычисление</a></h2>
+<pre><code class="language-text">GPIOMIS = GPIORIS AND GPIOIE
+</code></pre>
+<p>Бит установлен, только если событие произошло и прерывание
+разрешено.</p>
+<h2 id="выходы-2"><a class="header" href="#выходы-2">Выходы</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Выход</th><th>Источник</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOMIS[n]</code></td><td>Одноимённый бит</td></tr>
+<tr><td><code>GPIOINTR</code></td><td>ИЛИ всех бит <code>GPIOMIS</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="пример-обработчика"><a class="header" href="#пример-обработчика">Пример обработчика</a></h2>
+<pre><code class="language-c">void gpio_irq(void)
+{
+    uint32_t mis = *(volatile uint32_t *)(GPIO_BASE + 0x418);
+
+    if (mis &amp; (1u &lt;&lt; 0)) {
+        /* обработка линии 0 */
+    }
+    if (mis &amp; (1u &lt;&lt; 3)) {
+        /* обработка линии 3 */
+    }
+
+    /* Сбросить обработанные фронты */
+    *(volatile uint32_t *)(GPIO_BASE + 0x41C) = mis;
+}
+</code></pre>
+<h2 id="замечание-8"><a class="header" href="#замечание-8">Замечание</a></h2>
+<p>Для прерываний по уровню сброс через <code>GPIOIC</code> не устранит причину:
+если линия остаётся активной, прерывание возникнет снова. В этом
+случае нужно воздействовать на внешний источник.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="339-сброс-прерываний-gpioic"><a class="header" href="#339-сброс-прерываний-gpioic">3.3.9. Сброс прерываний GPIOIC</a></h1>
+<p><code>GPIOIC</code> сбрасывает логику обнаружения фронта для выбранных линий.</p>
+<h2 id="расположение-8"><a class="header" href="#расположение-8">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x41C</code></td></tr>
+<tr><td>Тип</td><td>WO</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-8"><a class="header" href="#битовые-поля-8">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Действие</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Без эффекта</td></tr>
+<tr><td>1</td><td>Сбросить флаг линии</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="правила-записи"><a class="header" href="#правила-записи">Правила записи</a></h2>
+<ul>
+<li>Запись единицы сбрасывает соответствующий флаг.</li>
+<li>Запись нуля ничего не делает.</li>
+<li>Чтение не имеет смысла: регистр только для записи.</li>
+</ul>
+<h2 id="пример-8"><a class="header" href="#пример-8">Пример</a></h2>
+<pre><code class="language-c">/* Сбросить все флаги */
+*(volatile uint32_t *)(GPIO_BASE + 0x41C) = 0xFF;
+
+/* Сбросить только линию 2 */
+*(volatile uint32_t *)(GPIO_BASE + 0x41C) = 1u &lt;&lt; 2;
+</code></pre>
+<h2 id="когда-нужен"><a class="header" href="#когда-нужен">Когда нужен</a></h2>
+<p>Для прерываний по фронту сброс обязателен: без него детектор
+не увидит следующее событие. Обычно в обработчике сбрасываются
+именно те биты, которые были обработаны:</p>
+<pre><code class="language-c">uint32_t mis = *(volatile uint32_t *)(GPIO_BASE + 0x418);
+/* ... обработка ... */
+*(volatile uint32_t *)(GPIO_BASE + 0x41C) = mis;
+</code></pre>
+<h2 id="для-уровня"><a class="header" href="#для-уровня">Для уровня</a></h2>
+<p>При обнаружении уровня сброс флага не поможет, если внешний
+источник продолжает удерживать активный уровень. Прерывание
+будет возникать повторно, пока уровень не изменится.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="3310-выбор-режима-gpioafsel"><a class="header" href="#3310-выбор-режима-gpioafsel">3.3.10. Выбор режима GPIOAFSEL</a></h1>
+<p><code>GPIOAFSEL</code> выбирает для каждой линии программное или аппаратное
+управление.</p>
+<h2 id="расположение-9"><a class="header" href="#расположение-9">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x420</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-9"><a class="header" href="#битовые-поля-9">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Режим</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Программный</td></tr>
+<tr><td>1</td><td>Аппаратный</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="что-переключается"><a class="header" href="#что-переключается">Что переключается</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Сигнал</th><th>Программный</th><th>Аппаратный</th></tr>
+</thead>
+<tbody>
+<tr><td>Направление</td><td><code>GPIODIR</code></td><td><code>nGPAFEN</code></td></tr>
+<tr><td>Выход</td><td><code>GPIODATA</code></td><td><code>GPAFOUT</code></td></tr>
+<tr><td>Вход</td><td><code>GPIN</code> → <code>GPIODATA</code></td><td><code>GPIN</code> → <code>GPAFIN</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="пример-9"><a class="header" href="#пример-9">Пример</a></h2>
+<pre><code class="language-c">/* Линии 7:4 — аппаратные, 3:0 — программные */
+*(volatile uint32_t *)(GPIO_BASE + 0x420) = 0xF0;
+</code></pre>
+<h2 id="замечание-9"><a class="header" href="#замечание-9">Замечание</a></h2>
+<p>В аппаратном режиме состояние линии всё равно можно прочитать
+через <code>GPIODATA</code>. Это удобно для контроля, но не даёт управлять
+линией из программы.</p>
+<p>Неиспользуемые входы <code>nGPAFEN</code> должны быть привязаны к высокому
+уровню, иначе поведение линии окажется неопределённым.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="3311-идентификация-gpioperiphid0-3"><a class="header" href="#3311-идентификация-gpioperiphid0-3">3.3.11. Идентификация GPIOPeriphID0-3</a></h1>
+<p>Четыре 8-битных регистра в диапазоне <code>0xFE0</code>–<code>0xFEC</code> содержат
+постоянный идентификатор периферии.</p>
+<h2 id="расположение-10"><a class="header" href="#расположение-10">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Смещение</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOPeriphID0</code></td><td><code>0xFE0</code></td><td><code>0x61</code></td></tr>
+<tr><td><code>GPIOPeriphID1</code></td><td><code>0xFE4</code></td><td><code>0x10</code></td></tr>
+<tr><td><code>GPIOPeriphID2</code></td><td><code>0xFE8</code></td><td><code>0x04</code></td></tr>
+<tr><td><code>GPIOPeriphID3</code></td><td><code>0xFEC</code></td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>Составное 32-битное слово: <code>0x00041061</code>.</p>
+<h2 id="поля"><a class="header" href="#поля">Поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Поле</th><th>Биты слова</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>PartNumber[11:0]</code></td><td><code>[11:0]</code></td><td><code>0x061</code></td></tr>
+<tr><td><code>Designer ID[19:12]</code></td><td><code>[19:12]</code></td><td><code>0x41</code> (ASCII <code>A</code>, ARM)</td></tr>
+<tr><td><code>Revision[23:20]</code></td><td><code>[23:20]</code></td><td>Номер ревизии</td></tr>
+<tr><td><code>Configuration[31:24]</code></td><td><code>[31:24]</code></td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="разбивка-по-регистрам"><a class="header" href="#разбивка-по-регистрам">Разбивка по регистрам</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Поле</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOPeriphID0</code></td><td><code>PartNumber0</code></td><td><code>0x61</code></td></tr>
+<tr><td><code>GPIOPeriphID1[7:4]</code></td><td><code>Designer0</code></td><td><code>0x1</code></td></tr>
+<tr><td><code>GPIOPeriphID1[3:0]</code></td><td><code>PartNumber1</code></td><td><code>0x0</code></td></tr>
+<tr><td><code>GPIOPeriphID2[7:4]</code></td><td><code>Revision</code></td><td><code>0x0</code></td></tr>
+<tr><td><code>GPIOPeriphID2[3:0]</code></td><td><code>Designer1</code></td><td><code>0x4</code></td></tr>
+<tr><td><code>GPIOPeriphID3</code></td><td><code>Configuration</code></td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="пример-проверки"><a class="header" href="#пример-проверки">Пример проверки</a></h2>
+<pre><code class="language-c">static int pl061_present(void)
+{
+    uint32_t id = 0;
+
+    for (int i = 0; i &lt; 4; i++)
+        id |= (*(volatile uint32_t *)(GPIO_BASE + 0xFE0 + 4 * i) &amp; 0xFF)
+              &lt;&lt; (8 * i);
+
+    return id == 0x00041061;
+}
+</code></pre>
+<h2 id="замечание-10"><a class="header" href="#замечание-10">Замечание</a></h2>
+<p>Регистры только для чтения. Обращения должны быть 32-битными;
+при сравнении маскируется младший байт, так как старшие биты
+слова не определены.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="3312-идентификация-gpiopcellid0-3"><a class="header" href="#3312-идентификация-gpiopcellid0-3">3.3.12. Идентификация GPIOPCellID0-3</a></h1>
+<p>Четыре 8-битных регистра в диапазоне <code>0xFF0</code>–<code>0xFFC</code> образуют
+стандартный идентификатор PrimeCell.</p>
+<h2 id="расположение-11"><a class="header" href="#расположение-11">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Регистр</th><th>Смещение</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIOPCellID0</code></td><td><code>0xFF0</code></td><td><code>0x0D</code></td></tr>
+<tr><td><code>GPIOPCellID1</code></td><td><code>0xFF4</code></td><td><code>0xF0</code></td></tr>
+<tr><td><code>GPIOPCellID2</code></td><td><code>0xFF8</code></td><td><code>0x05</code></td></tr>
+<tr><td><code>GPIOPCellID3</code></td><td><code>0xFFC</code></td><td><code>0xB1</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>Составное слово: <code>0xB105F00D</code>.</p>
+<h2 id="назначение"><a class="header" href="#назначение">Назначение</a></h2>
+<p>Идентификатор <code>0xB105F00D</code> закреплён за семейством PrimeCell.
+Он позволяет отличить компоненты PrimeCell от периферии других
+производителей.</p>
+<p><code>GPIOPCellID</code> указывает на семейство, а <code>GPIOPeriphID</code> — на
+конкретный компонент.</p>
+<h2 id="проверка"><a class="header" href="#проверка">Проверка</a></h2>
+<pre><code class="language-c">static uint8_t pcell_byte(int i)
+{
+    return *(volatile uint32_t *)(GPIO_BASE + 0xFF0 + 4 * i) &amp; 0xFF;
+}
+
+static int is_primecell(void)
+{
+    return pcell_byte(0) == 0x0D &amp;&amp;
+           pcell_byte(1) == 0xF0 &amp;&amp;
+           pcell_byte(2) == 0x05 &amp;&amp;
+           pcell_byte(3) == 0xB1;
+}
+</code></pre>
+<h2 id="полная-идентификация"><a class="header" href="#полная-идентификация">Полная идентификация</a></h2>
+<pre><code class="language-text">1. GPIOPCellID0-3 == 0xB105F00D  → это PrimeCell
+2. GPIOPeriphID0-3 == 0x00041061 → это PL061
+</code></pre>
+<h2 id="замечание-11"><a class="header" href="#замечание-11">Замечание</a></h2>
+<p>Регистры только для чтения, запись игнорируется. Обращения должны
+быть 32-битными, значащий байт маскируется.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="41-обзор-тестовой-обвязки"><a class="header" href="#41-обзор-тестовой-обвязки">4.1. Обзор тестовой обвязки</a></h1>
+<p>Кроме рабочей логики в состав контроллера входит дополнительная
+схема, предназначенная для функциональной проверки и подачи
+интеграционных векторов.</p>
+<h2 id="что-она-умеет"><a class="header" href="#что-она-умеет">Что она умеет</a></h2>
+<ul>
+<li><strong>Захватывать входные сигналы</strong> блока.</li>
+<li><strong>Стимулировать выходные сигналы</strong> блока.</li>
+<li>Позволять читать и записывать каждый внутрикристальный сигнал
+через регистры.</li>
+</ul>
+<h2 id="три-группы-сигналов"><a class="header" href="#три-группы-сигналов">Три группы сигналов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Группа</th><th>Как проверяется</th></tr>
+</thead>
+<tbody>
+<tr><td>Сигналы AMBA</td><td>Проверкой соединений всех разрядов адреса и данных</td></tr>
+<tr><td>Первичные входы и выходы</td><td>Простым «trickbox» — схемой, подтверждающей правильность подключения к выводам</td></tr>
+<tr><td>Внутрикристальные сигналы (например, источники прерываний)</td><td>Тестами, которые пишет интегратор под свою систему</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="как-попадают-векторы"><a class="header" href="#как-попадают-векторы">Как попадают векторы</a></h2>
+<p>Векторы подаются извне через 32-битный параллельный интерфейс
+внешней шины (External Bus Interface, <strong>EBI</strong>) и преобразуются
+во внутренние передачи шины AMBA. Подачей векторов управляет
+модуль <strong>Test Interface Controller</strong> (<strong>TIC</strong>) — ведущее устройство
+шины AMBA.</p>
+<h2 id="зачем-это-нужно"><a class="header" href="#зачем-это-нужно">Зачем это нужно</a></h2>
+<p>Тестовые регистры позволяют проверять контроллер <strong>изолированно
+от остальной системы</strong>, пользуясь только передачами по шине APB.
+Это удобно и на этапе производства кристалла, и при отладке
+интеграции.</p>
+<h2 id="ограничения-1"><a class="header" href="#ограничения-1">Ограничения</a></h2>
+<p>Тестовая логика не участвует в обычной работе. В нормальном режиме
+она отключена, а тестовые адреса зарезервированы и не должны
+использоваться драйвером.</p>
+<h2 id="связь-с-главой-3"><a class="header" href="#связь-с-главой-3">Связь с главой 3</a></h2>
+<p>Глава 3 описывала регистры, доступные программному обеспечению.
+Глава 4 описывает регистры по смещениям <code>0x600</code>–<code>0x614</code>, которые
+нужны только для проверки.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="42-scan-тестирование"><a class="header" href="#42-scan-тестирование">4.2. Scan-тестирование</a></h1>
+<p>Контроллер спроектирован так, чтобы упростить две вещи:</p>
+<ul>
+<li><strong>встраивание scan-ячеек</strong> в схему;</li>
+<li><strong>автоматическую генерацию тестовых последовательностей</strong>
+(Automatic Test Pattern Generation, <strong>ATPG</strong>).</li>
+</ul>
+<h2 id="почему-это-важно"><a class="header" href="#почему-это-важно">Почему это важно</a></h2>
+<p>Scan-тестирование — рекомендуемый способ производственного
+контроля кристалла. Ячейки сканирования объединяются в цепочки,
+через которые тестовое оборудование сдвигает значения, задаёт
+внутреннее состояние схемы и считывает результат.</p>
+<h2 id="что-требуется-от-интегратора"><a class="header" href="#что-требуется-от-интегратора">Что требуется от интегратора</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Требование</th><th>Пояснение</th></tr>
+</thead>
+<tbody>
+<tr><td>Подключить сигналы сканирования</td><td><code>SCANENABLE</code>, <code>SCANINPCLK</code>, <code>SCANOUTPCLK</code> описаны в главе 5</td></tr>
+<tr><td>Обеспечить тактирование</td><td>Сканирование идёт в домене <code>PCLK</code></td></tr>
+<tr><td>Не мешать в рабочем режиме</td><td>При <code>SCANENABLE = 0</code> схема работает штатно</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="отличие-от-интеграционных-тестов"><a class="header" href="#отличие-от-интеграционных-тестов">Отличие от интеграционных тестов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Свойство</th><th>Scan-тест</th><th>Интеграционный тест</th></tr>
+</thead>
+<tbody>
+<tr><td>Что проверяет</td><td>Внутреннюю логику кремния</td><td>Правильность соединений в системе</td></tr>
+<tr><td>Кто управляет</td><td>Внешнее тестовое оборудование</td><td>Программа через APB</td></tr>
+<tr><td>Когда применяется</td><td>Производство</td><td>Отладка интеграции</td></tr>
+</tbody>
+</table>
+</div>
+<p>Эти два вида проверки дополняют друг друга: scan находит дефекты
+изготовления, интеграционные векторы — ошибки подключения.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="43-интеграционные-тестовые-регистры"><a class="header" href="#43-интеграционные-тестовые-регистры">4.3. Интеграционные тестовые регистры</a></h1>
+<p>Тестовые регистры отображены в память по фиксированным смещениям
+от базового адреса контроллера.</p>
+<h2 id="карта-тестовых-регистров"><a class="header" href="#карта-тестовых-регистров">Карта тестовых регистров</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Смещение</th><th>Имя</th><th>Тип</th><th>Ширина</th><th>Сброс</th><th>Назначение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>+0x600</code></td><td><code>GPIOITCR</code></td><td>RW</td><td>1</td><td><code>0x0</code></td><td>Управление тестом</td></tr>
+<tr><td><code>+0x604</code></td><td><code>GPIOITIP1</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Чтение/установка входа <code>GPAFOUT</code></td></tr>
+<tr><td><code>+0x608</code></td><td><code>GPIOITIP2</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Чтение/установка входа <code>nGPAFEN</code></td></tr>
+<tr><td><code>+0x60C</code></td><td><code>GPIOITOP1</code></td><td>WO</td><td>8</td><td><code>0x00</code></td><td>Установка выхода <code>GPIOMIS</code></td></tr>
+<tr><td><code>+0x610</code></td><td><code>GPIOITOP2</code></td><td>RO</td><td>1</td><td><code>0x0</code></td><td>Чтение выхода <code>GPIOINTR</code></td></tr>
+<tr><td><code>+0x614</code></td><td><code>GPIOITOP3</code></td><td>RW</td><td>8</td><td><code>0x00</code></td><td>Чтение/установка выхода <code>GPAFIN</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="особенности-1"><a class="header" href="#особенности-1">Особенности</a></h2>
+<p><strong><code>GPIOITOP1</code>.</strong> Только для записи. Прочитать записанное значение
+можно в <code>GPIOMIS</code>, если установлен бит <code>ITEN</code>.</p>
+<p><strong><code>GPIOITOP2</code>.</strong> Один бит. Отражает состояние <code>GPIOINTR</code>, то есть
+результат логического ИЛИ по всем битам <code>GPIOMIS</code>, установленным
+при <code>GPIOITCR = 1</code>.</p>
+<p><strong><code>GPIOITOP3</code>.</strong> Записанное значение выдаётся на <code>GPAFIN[7:0]</code>;
+читается значение на выходе тестового мультиплексора.</p>
+<h2 id="пример-включения-тестового-режима"><a class="header" href="#пример-включения-тестового-режима">Пример включения тестового режима</a></h2>
+<pre><code class="language-c">#define GPIO_ITCR   (GPIO_BASE + 0x600)
+#define GPIO_ITIP1  (GPIO_BASE + 0x604)
+#define GPIO_ITIP2  (GPIO_BASE + 0x608)
+#define GPIO_ITOP1  (GPIO_BASE + 0x60C)
+#define GPIO_ITOP2  (GPIO_BASE + 0x610)
+#define GPIO_ITOP3  (GPIO_BASE + 0x614)
+
+/* Войти в интеграционный тестовый режим */
+*(volatile uint32_t *)GPIO_ITCR = 1;
+
+/* ... проверки ... */
+
+/* Вернуться в обычный режим */
+*(volatile uint32_t *)GPIO_ITCR = 0;
+</code></pre>
+<h2 id="замечание-12"><a class="header" href="#замечание-12">Замечание</a></h2>
+<p>После выхода из тестового режима регистры данных и прерываний
+возвращаются к обычному поведению. Состояние, накопленное
+в тестовом режиме, следует сбросить перед началом нормальной
+работы.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="431-gpioitcr"><a class="header" href="#431-gpioitcr">4.3.1. GPIOITCR</a></h1>
+<p><code>GPIOITCR</code> — регистр управления интеграционным тестом. Он определяет,
+работает контроллер в обычном режиме или в режиме теста.</p>
+<h2 id="расположение-12"><a class="header" href="#расположение-12">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x600</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>1 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x0</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-10"><a class="header" href="#битовые-поля-10">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Биты</th><th>Имя</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td>7:1</td><td>—</td><td>Зарезервировано, при чтении не определено</td></tr>
+<tr><td>0</td><td><code>ITEN</code></td><td>Разрешение интеграционного теста</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="значение-iten"><a class="header" href="#значение-iten">Значение ITEN</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>ITEN</code></th><th>Режим</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Обычная работа контроллера</td></tr>
+<tr><td>1</td><td>Интеграционный тестовый режим</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="что-меняется-при-iten--1"><a class="header" href="#что-меняется-при-iten--1">Что меняется при ITEN = 1</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Сигнал</th><th>Источник в тестовом режиме</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPAFOUT[7:0]</code></td><td><code>GPIOITIP1[7:0]</code></td></tr>
+<tr><td><code>nGPAFEN[7:0]</code></td><td><code>GPIOITIP2[7:0]</code></td></tr>
+<tr><td><code>GPIOMIS[7:0]</code></td><td><code>GPIOITOP1[7:0]</code></td></tr>
+<tr><td><code>GPAFIN[7:0]</code></td><td><code>GPIOITOP3[7:0]</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>Обратные пути также переключаются: значения внутрикристальных
+входов и выходов читаются через те же регистры, а не через
+рабочую логику.</p>
+<h2 id="пример-10"><a class="header" href="#пример-10">Пример</a></h2>
+<pre><code class="language-c">/* Включить тестовый режим */
+*(volatile uint32_t *)(GPIO_BASE + 0x600) = 0x1;
+
+/* ... */
+
+/* Выключить */
+*(volatile uint32_t *)(GPIO_BASE + 0x600) = 0x0;
+</code></pre>
+<h2 id="замечание-13"><a class="header" href="#замечание-13">Замечание</a></h2>
+<p>Бит <code>ITEN</code> — единственный управляющий бит тестовой обвязки.
+Все остальные тестовые регистры имеют смысл только при <code>ITEN = 1</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="432-gpioitip1"><a class="header" href="#432-gpioitip1">4.3.2. GPIOITIP1</a></h1>
+<p><code>GPIOITIP1</code> — регистр чтения и установки внутрикристального входа
+<code>GPAFOUT[7:0]</code>.</p>
+<h2 id="расположение-13"><a class="header" href="#расположение-13">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x604</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-11"><a class="header" href="#битовые-поля-11">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Биты</th><th>Имя</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td>7:0</td><td><code>GPAFOUT</code></td><td>Значение, подаваемое на внутрикристальный вход</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="запись-1"><a class="header" href="#запись-1">Запись</a></h2>
+<p>Запись задаёт значение, которое в тестовом режиме выдаётся
+на внутрикристальный вход <code>GPAFOUT[7:0]</code> вместо сигнала
+от внешнего блока.</p>
+<h2 id="чтение-2"><a class="header" href="#чтение-2">Чтение</a></h2>
+<p>Чтение возвращает значение <code>GPAFOUT[7:0]</code> на выходе тестового
+мультиплексора. При <code>ITEN = 0</code> это значение приходит извне,
+при <code>ITEN = 1</code> — из самого регистра.</p>
+<h2 id="пример-самопроверки"><a class="header" href="#пример-самопроверки">Пример самопроверки</a></h2>
+<pre><code class="language-c">#define GPIO_ITIP1  (GPIO_BASE + 0x604)
+
+*(volatile uint32_t *)(GPIO_BASE + 0x600) = 1;  /* ITEN = 1 */
+
+for (int bit = 0; bit &lt; 8; bit++) {
+    uint32_t pattern = 1u &lt;&lt; bit;
+
+    *(volatile uint32_t *)GPIO_ITIP1 = pattern;
+    if ((*(volatile uint32_t *)GPIO_ITIP1 &amp; 0xFF) != pattern)
+        /* ошибка соединения или логики */
+        ;
+}
+</code></pre>
+<p>Проверка «записать 1, затем 0 и прочитать» обнаруживает залипание
+линий и обрывы.</p>
+<h2 id="применение-в-системе"><a class="header" href="#применение-в-системе">Применение в системе</a></h2>
+<p>Если контроллер уже встроен в систему, при <code>ITEN = 0</code> чтение
+<code>GPIOITIP1</code> показывает значение, которое внешний блок подаёт
+на <code>GPAFOUT</code>. Это позволяет проверить соединение с этим блоком,
+не выводя сигнал на контактные площадки.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="433-gpioitip2"><a class="header" href="#433-gpioitip2">4.3.3. GPIOITIP2</a></h1>
+<p><code>GPIOITIP2</code> — регистр чтения и установки внутрикристального входа
+<code>nGPAFEN[7:0]</code>.</p>
+<h2 id="расположение-14"><a class="header" href="#расположение-14">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x608</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-12"><a class="header" href="#битовые-поля-12">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Биты</th><th>Имя</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td>7:0</td><td><code>nGPAFEN</code></td><td>Значение, подаваемое на внутрикристальный вход</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="активный-уровень"><a class="header" href="#активный-уровень">Активный уровень</a></h2>
+<p><code>nGPAFEN</code> — сигнал разрешения, активный <strong>низким</strong> уровнем:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Бит</th><th>Значение для линии</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Выход разрешён (аппаратный режим, выход)</td></tr>
+<tr><td>1</td><td>Выход запрещён (аппаратный режим, вход)</td></tr>
+</tbody>
+</table>
+</div>
+<p>Именно поэтому имя начинается с <code>n</code>.</p>
+<h2 id="запись-и-чтение"><a class="header" href="#запись-и-чтение">Запись и чтение</a></h2>
+<ul>
+<li>Запись задаёт значение, выдаваемое на <code>nGPAFEN[7:0]</code> в тестовом
+режиме.</li>
+<li>Чтение возвращает значение на выходе тестового мультиплексора:
+из внешнего блока при <code>ITEN = 0</code> или из регистра при <code>ITEN = 1</code>.</li>
+</ul>
+<h2 id="пример-11"><a class="header" href="#пример-11">Пример</a></h2>
+<pre><code class="language-c">#define GPIO_ITIP2  (GPIO_BASE + 0x608)
+
+/* Все линии — выходы в аппаратном режиме */
+*(volatile uint32_t *)GPIO_ITIP2 = 0x00;
+
+/* Все линии — входы в аппаратном режиме */
+*(volatile uint32_t *)GPIO_ITIP2 = 0xFF;
+</code></pre>
+<h2 id="замечание-14"><a class="header" href="#замечание-14">Замечание</a></h2>
+<p>Неиспользуемые входы <code>nGPAFEN</code> в реальной системе должны быть
+привязаны к высокому уровню. В тестовом режиме это требование
+не действует: значение задаёт регистр.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="434-gpioitop1"><a class="header" href="#434-gpioitop1">4.3.4. GPIOITOP1</a></h1>
+<p><code>GPIOITOP1</code> — регистр установки внутрикристального выхода
+<code>GPIOMIS[7:0]</code>.</p>
+<h2 id="расположение-15"><a class="header" href="#расположение-15">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x60C</code></td></tr>
+<tr><td>Тип</td><td>WO</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-13"><a class="header" href="#битовые-поля-13">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Биты</th><th>Имя</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td>7:0</td><td><code>GPIOMIS</code></td><td>Значение, выдаваемое на внутрикристальный выход</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="только-запись"><a class="header" href="#только-запись">Только запись</a></h2>
+<p>Регистр не читается. Чтобы узнать, что было записано, нужно
+установить <code>ITEN = 1</code> и прочитать <code>GPIOMIS</code> — в тестовом режиме
+этот регистр отражает содержимое <code>GPIOITOP1</code>.</p>
+<h2 id="зачем-нужен"><a class="header" href="#зачем-нужен">Зачем нужен</a></h2>
+<p><code>GPIOMIS[7:0]</code> в рабочем режиме формируется логикой прерываний.
+В тестовом режиме источником становится <code>GPIOITOP1</code>, что позволяет
+проверить проводку от контроллера до контроллера прерываний.</p>
+<h2 id="пример-12"><a class="header" href="#пример-12">Пример</a></h2>
+<pre><code class="language-c">#define GPIO_ITOP1  (GPIO_BASE + 0x60C)
+#define GPIO_MIS    (GPIO_BASE + 0x418)
+
+*(volatile uint32_t *)(GPIO_BASE + 0x600) = 1;  /* ITEN = 1 */
+
+/* Подать шаблон на выходы прерываний */
+*(volatile uint32_t *)GPIO_ITOP1 = 0xA5;
+
+/* Прочитать через GPIOMIS */
+uint32_t back = *(volatile uint32_t *)GPIO_MIS &amp; 0xFF;
+</code></pre>
+<h2 id="сброс-1"><a class="header" href="#сброс-1">Сброс</a></h2>
+<p>После сброса регистр равен <code>0x00</code>, то есть на выходы подаются
+нули.</p>
+<h2 id="замечание-15"><a class="header" href="#замечание-15">Замечание</a></h2>
+<p><code>GPIOINTR</code> формируется как ИЛИ по битам <code>GPIOMIS</code>. Поэтому запись
+ненулевого значения в <code>GPIOITOP1</code> должна приводить к высокому
+уровню на <code>GPIOINTR</code>, что можно проверить через <code>GPIOITOP2</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="435-gpioitop2"><a class="header" href="#435-gpioitop2">4.3.5. GPIOITOP2</a></h1>
+<p><code>GPIOITOP2</code> — регистр чтения внутрикристального выхода <code>GPIOINTR</code>.</p>
+<h2 id="расположение-16"><a class="header" href="#расположение-16">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x610</code></td></tr>
+<tr><td>Тип</td><td>RO</td></tr>
+<tr><td>Ширина</td><td>1 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x0</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-14"><a class="header" href="#битовые-поля-14">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Биты</th><th>Имя</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td>7:1</td><td>—</td><td>Зарезервировано, при чтении не определено</td></tr>
+<tr><td>0</td><td><code>GPIOINTR</code></td><td>Значение объединённого выхода прерываний</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="что-показывает"><a class="header" href="#что-показывает">Что показывает</a></h2>
+<p>Бит отражает состояние <code>GPIOINTR</code>. В тестовом режиме (<code>ITEN = 1</code>)
+он равен логическому ИЛИ по всем битам <code>GPIOMIS</code>, установленным
+через <code>GPIOITOP1</code>.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>GPIOITOP1</code></th><th><code>GPIOITOP2[0]</code></th></tr>
+</thead>
+<tbody>
+<tr><td><code>0x00</code></td><td>0</td></tr>
+<tr><td>любое ненулевое значение</td><td>1</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="почему-отдельный-регистр"><a class="header" href="#почему-отдельный-регистр">Почему отдельный регистр</a></h2>
+<p><code>GPIOINTR</code> — выходной сигнал, только для чтения. Записать его
+напрямую нельзя: значение задаётся через <code>GPIOMIS</code>. <code>GPIOITOP2</code>
+даёт программе способ увидеть результат этого ИЛИ.</p>
+<h2 id="пример-13"><a class="header" href="#пример-13">Пример</a></h2>
+<pre><code class="language-c">#define GPIO_ITOP1  (GPIO_BASE + 0x60C)
+#define GPIO_ITOP2  (GPIO_BASE + 0x610)
+
+*(volatile uint32_t *)(GPIO_BASE + 0x600) = 1;  /* ITEN = 1 */
+
+*(volatile uint32_t *)GPIO_ITOP1 = 0x01;
+if (!(*(volatile uint32_t *)GPIO_ITOP2 &amp; 1))
+    /* GPIOINTR не поднялся — ошибка */
+
+*(volatile uint32_t *)GPIO_ITOP1 = 0x00;
+if (*(volatile uint32_t *)GPIO_ITOP2 &amp; 1)
+    /* GPIOINTR остался высоким — ошибка */
+</code></pre>
+<h2 id="замечание-16"><a class="header" href="#замечание-16">Замечание</a></h2>
+<p>Читать <code>GPIOITOP2</code> можно независимо от значения <code>ITEN</code>, но
+осмысленным результат будет только в тестовом режиме, когда
+источником <code>GPIOMIS</code> служит <code>GPIOITOP1</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="436-gpioitop3"><a class="header" href="#436-gpioitop3">4.3.6. GPIOITOP3</a></h1>
+<p><code>GPIOITOP3</code> — регистр чтения и установки внутрикристального выхода
+<code>GPAFIN[7:0]</code>.</p>
+<h2 id="расположение-17"><a class="header" href="#расположение-17">Расположение</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Параметр</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>Смещение</td><td><code>0x614</code></td></tr>
+<tr><td>Тип</td><td>RW</td></tr>
+<tr><td>Ширина</td><td>8 бит</td></tr>
+<tr><td>Сброс</td><td><code>0x00</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="битовые-поля-15"><a class="header" href="#битовые-поля-15">Битовые поля</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Биты</th><th>Имя</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td>7:0</td><td><code>GPAFIN</code></td><td>Значение, выдаваемое на внутрикристальный выход</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="запись-2"><a class="header" href="#запись-2">Запись</a></h2>
+<p>Запись задаёт значение, которое в тестовом режиме выдаётся
+на <code>GPAFIN[7:0]</code> вместо данных от рабочей логики.</p>
+<h2 id="чтение-3"><a class="header" href="#чтение-3">Чтение</a></h2>
+<p>Чтение возвращает значение <code>GPAFIN[7:0]</code> на выходе тестового
+мультиплексора. При <code>ITEN = 0</code> это то, что контроллер реально
+выдаёт внешнему блоку, при <code>ITEN = 1</code> — содержимое регистра.</p>
+<h2 id="пример-14"><a class="header" href="#пример-14">Пример</a></h2>
+<pre><code class="language-c">#define GPIO_ITOP3  (GPIO_BASE + 0x614)
+
+*(volatile uint32_t *)(GPIO_BASE + 0x600) = 1;  /* ITEN = 1 */
+
+*(volatile uint32_t *)GPIO_ITOP3 = 0x55;
+if ((*(volatile uint32_t *)GPIO_ITOP3 &amp; 0xFF) != 0x55)
+    /* несоответствие: проверить соединение */
+    ;
+
+*(volatile uint32_t *)GPIO_ITOP3 = 0xAA;
+if ((*(volatile uint32_t *)GPIO_ITOP3 &amp; 0xFF) != 0xAA)
+    /* несоответствие */
+    ;
+</code></pre>
+<p>Шаблоны <code>0x55</code> и <code>0xAA</code> проверяют все восемь линий в обоих
+состояниях.</p>
+<h2 id="применение-в-системе-1"><a class="header" href="#применение-в-системе-1">Применение в системе</a></h2>
+<p>При <code>ITEN = 0</code> чтение <code>GPIOITOP3</code> показывает, что контроллер
+выдаёт на <code>GPAFIN</code>, то есть проверяет связь с потребителем этого
+сигнала — без вмешательства в работу линий.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="44-тестирование-входов"><a class="header" href="#44-тестирование-входов">4.4. Тестирование входов</a></h1>
+<p>Входы делятся на две группы, и для каждой применяется свой способ
+проверки.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Группа</th><th>Сигналы</th><th>Способ</th></tr>
+</thead>
+<tbody>
+<tr><td>Внутрикристальные</td><td><code>GPAFOUT[7:0]</code>, <code>nGPAFEN[7:0]</code></td><td>Запись через <code>GPIOITIP1</code>/<code>GPIOITIP2</code> и чтение обратно</td></tr>
+<tr><td>Первичные</td><td><code>GPIN[7:0]</code></td><td>Шлейф через trickbox и чтение через <code>GPIODATA</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="общая-идея"><a class="header" href="#общая-идея">Общая идея</a></h2>
+<p>Вход проверяется так: на него подаётся известное значение, а затем
+программа читает то, что дошло до внутренней точки наблюдения.
+Если прочитанное совпало с поданным, соединение и логика исправны.</p>
+<h2 id="что-проверяется"><a class="header" href="#что-проверяется">Что проверяется</a></h2>
+<ul>
+<li><strong>Соединение</strong> сигнала с источником.</li>
+<li><strong>Отсутствие залипания</strong> на нуле или единице.</li>
+<li><strong>Правильность разводки</strong> отдельных линий, а не только шины целиком.</li>
+</ul>
+<h2 id="последовательность"><a class="header" href="#последовательность">Последовательность</a></h2>
+<pre><code class="language-text">1. Установить ITEN = 1.
+2. Подать шаблон на тестовый регистр входа.
+3. Прочитать значение из регистра или из GPIODATA.
+4. Сравнить с ожидаемым.
+5. Повторить для всех битов.
+6. Установить ITEN = 0.
+</code></pre>
+<h2 id="замечание-о-задержке-1"><a class="header" href="#замечание-о-задержке-1">Замечание о задержке</a></h2>
+<p>Первичные входы <code>GPIN[7:0]</code> потенциально асинхронны по отношению
+к <code>PCLK</code>. Поэтому между подачей значения на вывод и чтением
+<code>GPIODATA</code> должно пройти не менее двух передних фронтов <code>PCLK</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="441-внутрикристальные-входы"><a class="header" href="#441-внутрикристальные-входы">4.4.1. Внутрикристальные входы</a></h1>
+<p>К внутрикристальным входам относятся <code>nGPAFEN[7:0]</code> и <code>GPAFOUT[7:0]</code>.
+Они приходят от других блоков системы, а не с контактных площадок.</p>
+<h2 id="как-устроена-обвязка"><a class="header" href="#как-устроена-обвязка">Как устроена обвязка</a></h2>
+<p>В пути чтения этих сигналов стоит мультиплексор, управляемый
+битом <code>ITEN</code>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>ITEN</code></th><th>Источник <code>nGPAFEN</code></th><th>Источник <code>GPAFOUT</code></th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>внешние входы <code>nGPAFEN</code></td><td>внешние входы <code>GPAFOUT</code></td></tr>
+<tr><td>1</td><td><code>GPIOITIP2[7:0]</code></td><td><code>GPIOITIP1[7:0]</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>То есть при <code>ITEN = 1</code> сигналы берутся из тестовых регистров.</p>
+<h2 id="автономная-проверка"><a class="header" href="#автономная-проверка">Автономная проверка</a></h2>
+<p>Когда контроллер испытывается отдельно от системы:</p>
+<ol>
+<li>Записать <code>1</code> в бит <code>ITEN</code> регистра <code>GPIOITCR</code>. Это включает
+путь от <code>GPIOITIP1</code> к <code>GPAFOUT</code> и от <code>GPIOITIP2</code> к <code>nGPAFEN</code>.</li>
+<li>Записать <code>1</code>, затем <code>0</code> в каждый бит <code>GPIOITIP1[7:0]</code>
+и <code>GPIOITIP2[7:0]</code>.</li>
+<li>Прочитать те же биты и убедиться, что записанное значение
+читается обратно.</li>
+</ol>
+<pre><code class="language-c">static void test_intra_inputs(void)
+{
+    *(volatile uint32_t *)(GPIO_BASE + 0x600) = 1;   /* ITEN */
+
+    for (int bit = 0; bit &lt; 8; bit++) {
+        uint32_t p = 1u &lt;&lt; bit;
+
+        *(volatile uint32_t *)(GPIO_BASE + 0x604) = p;
+        if ((*(volatile uint32_t *)(GPIO_BASE + 0x604) &amp; 0xFF) != p)
+            report_error(1, bit);
+
+        *(volatile uint32_t *)(GPIO_BASE + 0x604) = 0;
+        if ((*(volatile uint32_t *)(GPIO_BASE + 0x604) &amp; 0xFF) != 0)
+            report_error(1, bit);
+
+        *(volatile uint32_t *)(GPIO_BASE + 0x608) = p;
+        if ((*(volatile uint32_t *)(GPIO_BASE + 0x608) &amp; 0xFF) != p)
+            report_error(2, bit);
+    }
+}
+</code></pre>
+<h2 id="проверка-в-составе-системы"><a class="header" href="#проверка-в-составе-системы">Проверка в составе системы</a></h2>
+<p>Когда контроллер уже встроен:</p>
+<ol>
+<li>Записать <code>0</code> в <code>ITEN</code>. Это включает нормальный путь: от внешних
+выводов <code>nGPAFEN</code> к внутренним сигналам <code>nGPAFEN</code> и от внешних
+<code>GPAFOUT</code> к внутренним <code>GPAFOUT</code>.</li>
+<li>Устройством, подключённым к линиям аппаратного управления,
+переключить <code>nGPAFEN[7:0]</code> и <code>GPAFOUT[7:0]</code> из <code>1</code> в <code>0</code>.</li>
+<li>Прочитать <code>GPIOITIP2[7:0]</code> и <code>GPIOITIP1[7:0]</code> и убедиться,
+что значения от внешнего устройства доходят до контроллера.</li>
+</ol>
+<h2 id="что-это-выявляет"><a class="header" href="#что-это-выявляет">Что это выявляет</a></h2>
+<ul>
+<li>Обрыв или замыкание линии между блоками.</li>
+<li>Неправильную разводку отдельного бита.</li>
+<li>Отсутствие сигнала от неактивного соседнего блока.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="442-первичные-входы"><a class="header" href="#442-первичные-входы">4.4.2. Первичные входы</a></h1>
+<p>Первичные входы <code>GPIN[7:0]</code> приходят с контактных площадок кристалла.
+Для их проверки применяется интеграционный векторный <strong>trickbox</strong> —
+схема на плате или в тестовой среде, которая замыкает выходы
+контроллера на его входы.</p>
+<h2 id="схема-шлейфа"><a class="header" href="#схема-шлейфа">Схема шлейфа</a></h2>
+<p>В trickbox выходы <code>nGPEN</code> и <code>GPOUT</code> попарно сворачиваются
+по исключающему ИЛИ и подаются на вход <code>GPIN</code>:</p>
+<pre><code class="language-text">GPIN[n] = nGPEN[n] XOR GPOUT[n]
+</code></pre>
+<h2 id="последовательность-проверки"><a class="header" href="#последовательность-проверки">Последовательность проверки</a></h2>
+<ol>
+<li>Записать <code>1</code> в бит <code>ITEN</code> управляющего регистра.</li>
+<li>Выбрать аппаратный режим: записать <code>0xFF</code> в <code>GPIOAFSEL</code>.</li>
+<li>Подать на выходные линии <code>nGPEN[7:0]</code> и <code>GPOUT[7:0]</code> шаблоны
+«все единицы», «все нули» и «бегущая единица» через регистры
+<code>GPIOITIP2[7:0]</code> и <code>GPIOITIP1[7:0]</code> соответственно.</li>
+<li>Прочитать результат исключающего ИЛИ через <code>GPIODATA[7:0]</code>.</li>
+</ol>
+<h2 id="пример-15"><a class="header" href="#пример-15">Пример</a></h2>
+<pre><code class="language-c">#define GPIO_ITCR    (GPIO_BASE + 0x600)
+#define GPIO_ITIP1   (GPIO_BASE + 0x604)   /* GPOUT  */
+#define GPIO_ITIP2   (GPIO_BASE + 0x608)   /* nGPEN  */
+#define GPIO_AFSEL   (GPIO_BASE + 0x420)
+#define GPIO_DATA    (GPIO_BASE + 0x3FC)
+
+static void test_primary_inputs(void)
+{
+    *(volatile uint32_t *)GPIO_ITCR  = 1;      /* ITEN */
+    *(volatile uint32_t *)GPIO_AFSEL = 0xFF;   /* аппаратный режим */
+
+    for (int bit = 0; bit &lt; 8; bit++) {
+        uint32_t pen   = ~(1u &lt;&lt; bit) &amp; 0xFF;  /* активный низкий */
+        uint32_t dout  = 1u &lt;&lt; bit;
+        uint32_t expect = (pen ^ dout) &amp; 0xFF;
+
+        *(volatile uint32_t *)GPIO_ITIP2 = pen;
+        *(volatile uint32_t *)GPIO_ITIP1 = dout;
+
+        /* Не менее двух передних фронтов PCLK */
+        wait_pclk(2);
+
+        uint32_t got = *(volatile uint32_t *)GPIO_DATA &amp; 0xFF;
+        if (got != expect)
+            report_error(3, bit);
+    }
+
+    *(volatile uint32_t *)GPIO_ITCR  = 0;
+    *(volatile uint32_t *)GPIO_AFSEL = 0;
+}
+</code></pre>
+<h2 id="важно-про-адресацию-gpiodata"><a class="header" href="#важно-про-адресацию-gpiodata">Важно про адресацию GPIODATA</a></h2>
+<p><code>GPIODATA</code> использует младшие биты адреса как маску. Чтобы прочитать
+все восемь бит сразу, нужен адрес со смещением <code>+0x3FC</code>.</p>
+<h2 id="важно-про-задержку"><a class="header" href="#важно-про-задержку">Важно про задержку</a></h2>
+<p>Данные, поступающие на <code>GPIN[7:0]</code>, считаются потенциально
+асинхронными по отношению к <code>PCLK</code>. Поэтому перед чтением <code>GPIODATA</code>
+должно пройти время двух периодов <code>PCLK</code>.</p>
+<h2 id="что-проверяется-1"><a class="header" href="#что-проверяется-1">Что проверяется</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Что подаётся</th><th>Что выявляется</th></tr>
+</thead>
+<tbody>
+<tr><td>Все единицы</td><td>Залипание на нуле</td></tr>
+<tr><td>Все нули</td><td>Залипание на единице</td></tr>
+<tr><td>Бегущая единица</td><td>Перепутанные или оборванные линии</td></tr>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="45-тестирование-выходов"><a class="header" href="#45-тестирование-выходов">4.5. Тестирование выходов</a></h1>
+<p>Выходы, как и входы, делятся на две группы.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Группа</th><th>Сигналы</th><th>Способ</th></tr>
+</thead>
+<tbody>
+<tr><td>Внутрикристальные</td><td><code>GPIOMIS[7:0]</code>, <code>GPIOINTR</code>, <code>GPAFIN[7:0]</code></td><td>Запись через <code>GPIOITOP1</code>/<code>GPIOITOP3</code>, чтение обратно</td></tr>
+<tr><td>Первичные</td><td><code>nGPEN[7:0]</code>, <code>GPOUT[7:0]</code></td><td>Подача шаблонов через <code>GPIOITIP2</code>/<code>GPIOITIP1</code>, шлейф на <code>GPIN</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="общая-идея-1"><a class="header" href="#общая-идея-1">Общая идея</a></h2>
+<p>Выход проверяется так: программа задаёт значение, а затем читает
+его в точке, куда сигнал должен дойти. Совпадение доказывает, что
+путь от регистра до выхода цел.</p>
+<h2 id="что-проверяется-2"><a class="header" href="#что-проверяется-2">Что проверяется</a></h2>
+<ul>
+<li>Соединение выхода с приёмником.</li>
+<li>Отсутствие инверсии или перепутывания линий.</li>
+<li>Реакция объединённого выхода на отдельные биты.</li>
+</ul>
+<h2 id="ограничение-метода"><a class="header" href="#ограничение-метода">Ограничение метода</a></h2>
+<p>Проверка через APB видит сигнал только в доступной точке
+наблюдения. Если приёмник не имеет собственных тестовых регистров,
+проверить участок за пределами кристалла можно лишь косвенно —
+например, через шлейф на входы.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="451-внутрикристальные-выходы"><a class="header" href="#451-внутрикристальные-выходы">4.5.1. Внутрикристальные выходы</a></h1>
+<p>К внутрикристальным выходам относятся <code>GPAFIN[7:0]</code>, <code>GPIOMIS[7:0]</code>
+и <code>GPIOINTR</code>.</p>
+<h2 id="автономная-проверка-1"><a class="header" href="#автономная-проверка-1">Автономная проверка</a></h2>
+<p>Когда контроллер испытывается отдельно:</p>
+<ol>
+<li>Записать <code>1</code> в бит <code>ITEN</code>. Это выбирает путь от <code>GPIOITOP1[7:0]</code>
+к внутрикристальному выходу <code>GPIOMIS[7:0]</code>, а также путь
+от <code>GPIOITOP3[7:0]</code> к <code>GPAFIN[7:0]</code>.</li>
+<li>Записать <code>1</code>, затем <code>0</code> в биты <code>GPIOITOP1[7:0]</code> и прочитать
+те же биты в <code>GPIOMIS[7:0]</code>.</li>
+<li><code>GPIOINTR</code> можно прочитать через <code>GPIOITOP2</code> независимо
+от <code>GPIOITCR</code>.</li>
+<li>Записать единицы и нули в <code>GPIOITOP3[7:0]</code> и прочитать те же
+биты обратно.</li>
+</ol>
+<h2 id="проверка-в-составе-системы-1"><a class="header" href="#проверка-в-составе-системы-1">Проверка в составе системы</a></h2>
+<p>Когда контроллер встроен в систему:</p>
+<ol>
+<li>Записать <code>1</code> в <code>ITEN</code>. Это выбирает тестовый путь от внутренних
+линий <code>GPIOITOP1[7:0]</code> к внешним выходам <code>GPIOMIS[7:0]</code>,
+а также путь от <code>GPIOITOP3[7:0]</code> к <code>GPAFIN[7:0]</code>.</li>
+<li>Переключать биты <code>GPIOITOP1[7:0]</code> из <code>1</code> в <code>0</code>, проверяя связь
+между контроллером прерываний и PL061. Результат читается
+из внутренних тестовых регистров контроллера прерываний.</li>
+<li>Подавать единицы и нули в <code>GPIOITOP3[7:0]</code> и читать те же биты
+из внутреннего регистра приёмника <code>GPAFIN</code>, чтобы проверить
+соединение.</li>
+</ol>
+<h2 id="пример-16"><a class="header" href="#пример-16">Пример</a></h2>
+<pre><code class="language-c">#define GPIO_ITOP1  (GPIO_BASE + 0x60C)
+#define GPIO_ITOP2  (GPIO_BASE + 0x610)
+#define GPIO_ITOP3  (GPIO_BASE + 0x614)
+#define GPIO_MIS    (GPIO_BASE + 0x418)
+
+static void test_intra_outputs(void)
+{
+    *(volatile uint32_t *)(GPIO_BASE + 0x600) = 1;   /* ITEN */
+
+    for (int bit = 0; bit &lt; 8; bit++) {
+        uint32_t p = 1u &lt;&lt; bit;
+
+        *(volatile uint32_t *)GPIO_ITOP1 = p;
+        if ((*(volatile uint32_t *)GPIO_MIS &amp; 0xFF) != p)
+            report_error(4, bit);
+
+        if (!(*(volatile uint32_t *)GPIO_ITOP2 &amp; 1))
+            report_error(5, bit);
+
+        *(volatile uint32_t *)GPIO_ITOP1 = 0;
+        if (*(volatile uint32_t *)GPIO_ITOP2 &amp; 1)
+            report_error(6, bit);
+
+        *(volatile uint32_t *)GPIO_ITOP3 = p;
+        if ((*(volatile uint32_t *)GPIO_ITOP3 &amp; 0xFF) != p)
+            report_error(7, bit);
+    }
+}
+</code></pre>
+<h2 id="что-выявляет"><a class="header" href="#что-выявляет">Что выявляет</a></h2>
+<ul>
+<li>Обрыв между <code>GPIOMIS</code> и контроллером прерываний.</li>
+<li>Неисправность объединения в <code>GPIOINTR</code>.</li>
+<li>Ошибку в соединении <code>GPAFIN</code>.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="452-первичные-выходы"><a class="header" href="#452-первичные-выходы">4.5.2. Первичные выходы</a></h1>
+<p>Первичные выходы — <code>nGPEN[7:0]</code> и <code>GPOUT[7:0]</code>. Они проверяются
+тем же интеграционным trickbox, что и первичные входы.</p>
+<h2 id="шлейф"><a class="header" href="#шлейф">Шлейф</a></h2>
+<p>Выходные контакты замыкаются на входные, причём вход получает
+исключающее ИЛИ пары выходов:</p>
+<pre><code class="language-text">GPIN[n] = nGPEN[n] XOR GPOUT[n]
+</code></pre>
+<h2 id="порядок-проверки"><a class="header" href="#порядок-проверки">Порядок проверки</a></h2>
+<ol>
+<li>Включить тестовый режим и аппаратное управление: <code>ITEN = 1</code>,
+<code>GPIOAFSEL = 0xFF</code>.</li>
+<li>Через <code>GPIOITIP2[7:0]</code> задать <code>nGPEN</code>, через <code>GPIOITIP1[7:0]</code>
+задать <code>GPOUT</code>.</li>
+<li>Прочитать вернувшееся значение через <code>GPIODATA</code>.</li>
+</ol>
+<h2 id="пример-17"><a class="header" href="#пример-17">Пример</a></h2>
+<pre><code class="language-c">static void test_primary_outputs(void)
+{
+    *(volatile uint32_t *)(GPIO_BASE + 0x600) = 1;      /* ITEN */
+    *(volatile uint32_t *)(GPIO_BASE + 0x420) = 0xFF;   /* AFSEL */
+
+    const uint32_t patterns[] = { 0xFF, 0x00, 0x55, 0xAA };
+
+    for (unsigned i = 0; i &lt; sizeof(patterns) / sizeof(patterns[0]); i++) {
+        uint32_t pen  = patterns[i];
+        uint32_t dout = ~patterns[i] &amp; 0xFF;
+
+        *(volatile uint32_t *)(GPIO_BASE + 0x608) = pen;
+        *(volatile uint32_t *)(GPIO_BASE + 0x604) = dout;
+
+        wait_pclk(2);
+
+        uint32_t got = *(volatile uint32_t *)(GPIO_BASE + 0x3FC) &amp; 0xFF;
+        if (got != ((pen ^ dout) &amp; 0xFF))
+            report_error(8, i);
+    }
+
+    *(volatile uint32_t *)(GPIO_BASE + 0x600) = 0;
+    *(volatile uint32_t *)(GPIO_BASE + 0x420) = 0;
+}
+</code></pre>
+<h2 id="замечание-о-полярности"><a class="header" href="#замечание-о-полярности">Замечание о полярности</a></h2>
+<p><code>nGPEN</code> активен низким уровнем: ноль разрешает выход. Поэтому
+в шаблонах эта линия обычно инвертируется относительно <code>GPOUT</code>,
+иначе исключающее ИЛИ даст постоянный уровень и проверка окажется
+неполной.</p>
+<h2 id="замечание-о-задержке-2"><a class="header" href="#замечание-о-задержке-2">Замечание о задержке</a></h2>
+<p>Сигнал, поступивший на <code>GPIN[7:0]</code>, потенциально асинхронен
+к <code>PCLK</code>. Перед чтением <code>GPIODATA</code> нужно подать два передних
+фронта <code>PCLK</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="46-итоги-интеграционного-тестирования"><a class="header" href="#46-итоги-интеграционного-тестирования">4.6. Итоги интеграционного тестирования</a></h1>
+<p>Таблица сводит стратегии проверки для всех выводов контроллера.</p>
+<h2 id="сводная-таблица"><a class="header" href="#сводная-таблица">Сводная таблица</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Сигнал</th><th>Тип</th><th>Приёмник / источник</th><th>Способ проверки</th></tr>
+</thead>
+<tbody>
+<tr><td><code>PRESETn</code></td><td>Вход</td><td>Контроллер сброса</td><td>Векторами не проверяется</td></tr>
+<tr><td><code>PADDR[11:2]</code></td><td>Вход</td><td>APB</td><td>Чтение и запись регистров</td></tr>
+<tr><td><code>PCLK</code></td><td>Вход</td><td>APB</td><td>Чтение и запись регистров</td></tr>
+<tr><td><code>PENABLE</code></td><td>Вход</td><td>APB</td><td>Чтение и запись регистров</td></tr>
+<tr><td><code>PRDATA[7:0]</code></td><td>Выход</td><td>APB</td><td>Чтение и запись регистров</td></tr>
+<tr><td><code>PSEL</code></td><td>Вход</td><td>APB</td><td>Чтение и запись регистров</td></tr>
+<tr><td><code>PWDATA[7:0]</code></td><td>Вход</td><td>APB</td><td>Чтение и запись регистров</td></tr>
+<tr><td><code>PWRITE</code></td><td>Вход</td><td>APB</td><td>Чтение и запись регистров</td></tr>
+<tr><td><code>GPIOMIS[7:0]</code></td><td>Выход</td><td>Контроллер прерываний</td><td><code>GPIOITOP1</code> и <code>GPIOITOP2</code></td></tr>
+<tr><td><code>GPIOINTR</code></td><td>Выход</td><td>Контроллер прерываний</td><td><code>GPIOITOP1</code> и <code>GPIOITOP2</code></td></tr>
+<tr><td><code>nGPEN[7:0]</code></td><td>Выход</td><td>Выводы</td><td>Trickbox, <code>GPIOITIP2</code>, <code>GPIOAFSEL</code></td></tr>
+<tr><td><code>GPOUT[7:0]</code></td><td>Выход</td><td>Выводы</td><td>Trickbox, <code>GPIOITIP1</code>, <code>GPIOAFSEL</code></td></tr>
+<tr><td><code>GPIN[7:0]</code></td><td>Вход</td><td>Выводы</td><td>Trickbox, <code>GPIODATA</code>, <code>GPIOAFSEL</code></td></tr>
+<tr><td><code>nGPAFEN[7:0]</code></td><td>Вход</td><td>Внутренний блок</td><td><code>GPIOITIP2</code></td></tr>
+<tr><td><code>GPAFOUT[7:0]</code></td><td>Вход</td><td>Внутренний блок</td><td><code>GPIOITIP1</code></td></tr>
+<tr><td><code>GPAFIN[7:0]</code></td><td>Выход</td><td>Внутренний блок</td><td><code>GPIOITOP3</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="замечания-к-таблице"><a class="header" href="#замечания-к-таблице">Замечания к таблице</a></h2>
+<p><strong>Сброс.</strong> <code>PRESETn</code> интеграционными векторами не проверяется:
+его влияние проверяется отдельно на уровне системы.</p>
+<p><strong>Сигналы APB.</strong> Они проверяются обычными обращениями к регистрам:
+если чтение возвращает записанное, адрес, данные и управление
+соединены правильно.</p>
+<p><strong>Входы с выводов.</strong> Данные на <code>GPIN[7:0]</code> потенциально асинхронны
+к <code>PCLK</code>, поэтому перед чтением через <code>GPIODATA</code> нужно подать
+два передних фронта <code>PCLK</code>.</p>
+<h2 id="порядок-проведения"><a class="header" href="#порядок-проведения">Порядок проведения</a></h2>
+<pre><code class="language-text">1. Проверить сигналы APB.
+2. Проверить внутрикристальные входы.
+3. Проверить внутрикристальные выходы.
+4. Проверить первичные входы и выходы через trickbox.
+5. Вернуть ITEN = 0 и сбросить накопленное состояние.
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="51-сигналы-amba-apb"><a class="header" href="#51-сигналы-amba-apb">5.1. Сигналы AMBA APB</a></h1>
+<p>Контроллер подключён к шине AMBA APB как ведомое устройство.
+Сигналы APB имеют префикс <code>P</code> и активны <strong>высоким</strong> уровнем;
+активные низким уровнем сигналы содержат строчную <code>n</code>.</p>
+<h2 id="описание-сигналов"><a class="header" href="#описание-сигналов">Описание сигналов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Имя</th><th>Тип</th><th>Источник / приёмник</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>PRESETn</code></td><td>Вход</td><td>Контроллер сброса</td><td>Сброс шины, активный низким уровнем</td></tr>
+<tr><td><code>PADDR[11:2]</code></td><td>Вход</td><td>APB</td><td>Часть адресной шины</td></tr>
+<tr><td><code>PCLK</code></td><td>Вход</td><td>APB</td><td>Тактовый сигнал, по которому выполняются все передачи</td></tr>
+<tr><td><code>PENABLE</code></td><td>Вход</td><td>APB</td><td>Разрешение передачи: высокий уровень в течение одного такта <code>PCLK</code></td></tr>
+<tr><td><code>PRDATA[7:0]</code></td><td>Выход</td><td>APB</td><td>Часть однонаправленной шины данных чтения</td></tr>
+<tr><td><code>PSEL</code></td><td>Вход</td><td>APB</td><td>Выбор устройства от декодера</td></tr>
+<tr><td><code>PWDATA[7:0]</code></td><td>Вход</td><td>APB</td><td>Часть однонаправленной шины данных записи</td></tr>
+<tr><td><code>PWRITE</code></td><td>Вход</td><td>APB</td><td>Направление передачи: 1 — запись, 0 — чтение</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="как-выполняется-передача"><a class="header" href="#как-выполняется-передача">Как выполняется передача</a></h2>
+<pre><code class="language-text">1. Ведущее устройство выставляет PSEL = 1 и адрес PADDR.
+2. Выставляется PWRITE: 1 для записи, 0 для чтения.
+3. На следующем такте PENABLE = 1 — передача завершается.
+4. При записи данные берутся с PWDATA, при чтении
+   выдаются на PRDATA.
+</code></pre>
+<h2 id="особенности-2"><a class="header" href="#особенности-2">Особенности</a></h2>
+<p><strong>Адрес.</strong> Используются разряды <code>PADDR[11:2]</code> — двенадцать бит
+позволяют адресовать 4 КБ, а младшие два бита отброшены, так как
+обращения 32-битные.</p>
+<p><strong>Данные.</strong> Разрядность выбрана 8 бит, поскольку все регистры
+контроллера занимают младший байт слова.</p>
+<p><strong>Сброс.</strong> <code>PRESETn</code> обнуляет регистры и переводит линии в режим
+входа. Он не влияет на состояние внешних сигналов, подключённых
+к выводам.</p>
+<h2 id="замечание-о-psel"><a class="header" href="#замечание-о-psel">Замечание о <code>PSEL</code></a></h2>
+<p><code>PSEL</code> формируется декодером шины и означает, что выбрано именно
+это устройство. При <code>PSEL = 0</code> контроллер не реагирует
+на изменения остальных сигналов.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="52-внутрикристальные-сигналы"><a class="header" href="#52-внутрикристальные-сигналы">5.2. Внутрикристальные сигналы</a></h1>
+<p>Помимо сигналов APB контроллеру нужны внутрикристальные сигналы.
+Они соединяют его с другими блоками системы.</p>
+<h2 id="описание-сигналов-1"><a class="header" href="#описание-сигналов-1">Описание сигналов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Имя</th><th>Тип</th><th>Источник / приёмник</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nGPAFEN[7:0]</code></td><td>Вход</td><td>Внутренний блок</td><td>Разрешение выхода аппаратного управления, активный низким уровнем</td></tr>
+<tr><td><code>GPAFOUT[7:0]</code></td><td>Вход</td><td>Внутренний блок</td><td>Данные аппаратного управления на выход</td></tr>
+<tr><td><code>GPAFIN[7:0]</code></td><td>Выход</td><td>Внутренний блок</td><td>Данные аппаратного управления со входа</td></tr>
+<tr><td><code>GPIOMIS[7:0]</code></td><td>Выход</td><td>Контроллер прерываний</td><td>Индивидуальные сигналы прерываний</td></tr>
+<tr><td><code>GPIOINTR</code></td><td>Выход</td><td>Контроллер прерываний</td><td>Объединённый сигнал прерываний</td></tr>
+<tr><td><code>SCANENABLE</code></td><td>Вход</td><td>Контроллер сканирования</td><td>Разрешение сканирования</td></tr>
+<tr><td><code>SCANINPCLK</code></td><td>Вход</td><td>Контроллер сканирования</td><td>Вход данных сканирования для домена <code>PCLK</code></td></tr>
+<tr><td><code>SCANOUTPCLK</code></td><td>Выход</td><td>Контроллер сканирования</td><td>Выход данных сканирования для домена <code>PCLK</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="примечания-к-отдельным-сигналам"><a class="header" href="#примечания-к-отдельным-сигналам">Примечания к отдельным сигналам</a></h2>
+<p><strong><code>nGPAFEN</code>.</strong> Активен низким уровнем. Если сигнал не используется,
+его входы должны быть привязаны к <strong>высокому</strong> уровню — иначе
+поведение линии окажется неопределённым.</p>
+<p><strong><code>GPAFOUT</code>.</strong> Если не используется, входы можно привязать
+к низкому или высокому уровню.</p>
+<p><strong><code>GPIOMIS</code>.</strong> Высокий уровень на линии означает, что сработало
+условие прерывания для соответствующего вывода с учётом настроек
+регистров.</p>
+<p><strong><code>GPIOINTR</code>.</strong> Логическое ИЛИ сигналов <code>GPIOMIS</code>. Высокий уровень
+означает, что сработало хотя бы одно условие прерывания.</p>
+<h2 id="подключение-к-контроллеру-прерываний"><a class="header" href="#подключение-к-контроллеру-прерываний">Подключение к контроллеру прерываний</a></h2>
+<pre><code class="language-text">GPIOMIS[7:0] ──┬──▶ входы индивидуальных прерываний
+               │
+               └──▶ ИЛИ ──▶ GPIOINTR ──▶ общий вход прерывания
+</code></pre>
+<p>Оба варианта могут использоваться одновременно: система вправе
+выбрать общий сигнал и опрашивать <code>GPIOMIS</code>, либо завести каждую
+линию отдельно.</p>
+<h2 id="сигналы-сканирования"><a class="header" href="#сигналы-сканирования">Сигналы сканирования</a></h2>
+<p><code>SCANENABLE</code>, <code>SCANINPCLK</code> и <code>SCANOUTPCLK</code> относятся к
+производственному тестированию. В обычной работе они не влияют
+на функционирование контроллера.</p>
+<h2 id="общее-правило"><a class="header" href="#общее-правило">Общее правило</a></h2>
+<p>Сигналы, помеченные как «внутренний блок», могут подключаться
+к любой периферии, а соответствующие выводы кристалла способны
+разделяться между GPIO и другой функцией.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="53-сигналы-выводов"><a class="header" href="#53-сигналы-выводов">5.3. Сигналы выводов</a></h1>
+<p>Эти сигналы соединяют контроллер с контактными площадками кристалла
+через двунаправленные буферы. При интеграции нужно правильно
+использовать выводы периферии, чтобы выполнить требования
+интерфейса.</p>
+<h2 id="описание-сигналов-2"><a class="header" href="#описание-сигналов-2">Описание сигналов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Имя</th><th>Тип</th><th>Тип вывода</th><th>Описание</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nGPEN[7:0]</code></td><td>Выход</td><td>Вывод</td><td>Разрешение выходного буфера, активный низким уровнем</td></tr>
+<tr><td><code>GPOUT[7:0]</code></td><td>Выход</td><td>Вывод</td><td>Данные для выходного буфера</td></tr>
+<tr><td><code>GPIN[7:0]</code></td><td>Вход</td><td>Вывод</td><td>Данные, приходящие с вывода</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="ngpen"><a class="header" href="#ngpen"><code>nGPEN</code></a></h2>
+<p>Управляется регистром <code>GPIODIR</code> в программном режиме либо
+вспомогательными сигналами в аппаратном режиме.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Значение</th><th>Действие</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Выходной буфер включён, вывод работает на выход</td></tr>
+<tr><td>1</td><td>Выходной буфер выключен, вывод работает на вход</td></tr>
+</tbody>
+</table>
+</div>
+<p>Активный низкий уровень означает, что после сброса, когда
+<code>GPIODIR = 0x00</code>, все выходные буферы выключены.</p>
+<h2 id="gpout"><a class="header" href="#gpout"><code>GPOUT</code></a></h2>
+<p>Данные выходного буфера. Источник — <code>GPIODATA</code> в программном режиме
+или <code>GPAFOUT</code> в аппаратном.</p>
+<h2 id="gpin"><a class="header" href="#gpin"><code>GPIN</code></a></h2>
+<p>Данные с вывода. Значения читаются через APB в программном режиме;
+в аппаратном режиме они также передаются на <code>GPAFIN</code>. Чтение через
+APB доступно в обоих режимах.</p>
+<h2 id="схема-подключения"><a class="header" href="#схема-подключения">Схема подключения</a></h2>
+<pre><code class="language-text">                  ┌─────────────┐
+   nGPEN[7:0] ───▶│             │
+   GPOUT[7:0] ───▶│   Буфер     │◀──▶  Контактная площадка
+   GPIN[7:0]  ◀───│             │
+                  └─────────────┘
+</code></pre>
+<h2 id="режимы"><a class="header" href="#режимы">Режимы</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Режим</th><th><code>nGPEN</code></th><th><code>GPOUT</code></th><th><code>GPIN</code></th></tr>
+</thead>
+<tbody>
+<tr><td>Программный</td><td>из <code>GPIODIR</code></td><td>из <code>GPIODATA</code></td><td>в <code>GPIODATA</code></td></tr>
+<tr><td>Аппаратный</td><td>из <code>nGPAFEN</code></td><td>из <code>GPAFOUT</code></td><td>в <code>GPAFIN</code> и <code>GPIODATA</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="замечание-17"><a class="header" href="#замечание-17">Замечание</a></h2>
+<p>Электрические характеристики выводов — допустимые токи, подтяжки,
+защита от электростатического разряда — задаются при интеграции
+кристалла и в состав блока не входят.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="приложение-a-глоссарий"><a class="header" href="#приложение-a-глоссарий">Приложение A. Глоссарий</a></h1>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Термин</th><th>Расшифровка</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>AMBA</strong></td><td>Advanced Microcontroller Bus Architecture</td><td>Семейство шин ARM</td></tr>
+<tr><td><strong>APB</strong></td><td>Advanced Peripheral Bus</td><td>Локальная шина для медленной периферии</td></tr>
+<tr><td><strong>ATPG</strong></td><td>Automatic Test Pattern Generation</td><td>Автоматическая генерация тестовых последовательностей</td></tr>
+<tr><td><strong>EBI</strong></td><td>External Bus Interface</td><td>Интерфейс внешней шины, через который подаются тестовые векторы</td></tr>
+<tr><td><strong>GPIO</strong></td><td>General Purpose Input/Output</td><td>Ввод-вывод общего назначения</td></tr>
+<tr><td><strong>ITEN</strong></td><td>Integration Test Enable</td><td>Бит разрешения интеграционного теста</td></tr>
+<tr><td><strong>PAD</strong></td><td>—</td><td>Контактная площадка кристалла</td></tr>
+<tr><td><strong>PrimeCell</strong></td><td>—</td><td>Обозначение библиотеки периферийных блоков ARM</td></tr>
+<tr><td><strong>TIC</strong></td><td>Test Interface Controller</td><td>Ведущее устройство шины, управляющее подачей тестовых векторов</td></tr>
+<tr><td><strong>Trickbox</strong></td><td>—</td><td>Схема шлейфа, замыкающая выходы блока на его входы</td></tr>
+<tr><td><strong>Scan</strong></td><td>—</td><td>Метод производственного тестирования через цепочки ячеек</td></tr>
+<tr><td><strong>Маска адреса</strong></td><td>—</td><td>Использование разрядов адреса для выбора изменяемых бит данных</td></tr>
+<tr><td><strong>Активный уровень</strong></td><td>—</td><td>Уровень сигнала, при котором он считается asserted</td></tr>
+<tr><td><strong>Фронт</strong></td><td>—</td><td>Переход сигнала из одного уровня в другой</td></tr>
+<tr><td><strong>Уровень</strong></td><td>—</td><td>Устойчивое состояние сигнала</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="обозначения-регистров"><a class="header" href="#обозначения-регистров">Обозначения регистров</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Имя</th><th>Полное название</th><th>Перевод</th></tr>
+</thead>
+<tbody>
+<tr><td><code>GPIODATA</code></td><td>Data</td><td>Данные</td></tr>
+<tr><td><code>GPIODIR</code></td><td>Data Direction</td><td>Направление данных</td></tr>
+<tr><td><code>GPIOIS</code></td><td>Interrupt Sense</td><td>Чувствительность прерывания</td></tr>
+<tr><td><code>GPIOIBE</code></td><td>Interrupt Both Edges</td><td>Прерывание по обоим фронтам</td></tr>
+<tr><td><code>GPIOIEV</code></td><td>Interrupt Event</td><td>Событие прерывания</td></tr>
+<tr><td><code>GPIOIE</code></td><td>Interrupt Mask</td><td>Маска прерывания</td></tr>
+<tr><td><code>GPIORIS</code></td><td>Raw Interrupt Status</td><td>Сырой статус прерывания</td></tr>
+<tr><td><code>GPIOMIS</code></td><td>Masked Interrupt Status</td><td>Маскированный статус прерывания</td></tr>
+<tr><td><code>GPIOIC</code></td><td>Interrupt Clear</td><td>Сброс прерывания</td></tr>
+<tr><td><code>GPIOAFSEL</code></td><td>Mode Control Select</td><td>Выбор режима управления</td></tr>
+<tr><td><code>GPIOITCR</code></td><td>Integration Test Control</td><td>Управление интеграционным тестом</td></tr>
+<tr><td><code>GPIOITIP1/2</code></td><td>Integration Test Input</td><td>Тестовый вход</td></tr>
+<tr><td><code>GPIOITOP1/2/3</code></td><td>Integration Test Output</td><td>Тестовый выход</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="обозначения-сигналов"><a class="header" href="#обозначения-сигналов">Обозначения сигналов</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Сигнал</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td><code>nGPEN</code></td><td>Разрешение выхода, активный низким</td></tr>
+<tr><td><code>GPOUT</code></td><td>Данные на выход</td></tr>
+<tr><td><code>GPIN</code></td><td>Данные со входа</td></tr>
+<tr><td><code>nGPAFEN</code></td><td>Разрешение аппаратного управления, активный низким</td></tr>
+<tr><td><code>GPAFOUT</code></td><td>Данные аппаратного управления на выход</td></tr>
+<tr><td><code>GPAFIN</code></td><td>Данные аппаратного управления со входа</td></tr>
+<tr><td><code>GPIOINTR</code></td><td>Объединённое прерывание</td></tr>
+<tr><td><code>PRESETn</code></td><td>Сброс шины, активный низким</td></tr>
+</tbody>
+</table>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-c22b7243.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
