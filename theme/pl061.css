@@ -1,0 +1,40 @@
+/* Оформление таблиц регистров в стиле технических руководств ARM */
+table {
+    border-collapse: collapse;
+    margin: 1.2em 0;
+    width: 100%;
+}
+
+table th,
+table td {
+    border: 1px solid var(--table-border-color, #c9c9c9);
+    padding: 0.35em 0.6em;
+    vertical-align: top;
+}
+
+table th {
+    background: var(--table-alternate-bg, #f2f2f2);
+    text-align: left;
+}
+
+table td code,
+table th code {
+    white-space: nowrap;
+}
+
+/* Блоки примечаний */
+.note,
+.caution {
+    border-left: 4px solid var(--quote-border, #5c8ac7);
+    padding: 0.4em 1em;
+    margin: 1em 0;
+    background: var(--quote-bg, #f5f8fc);
+}
+
+/* Рисунки-схемы в виде ASCII-блоков */
+pre.diagram {
+    background: var(--code-bg, #f6f7f8);
+    border: 1px solid var(--table-border-color, #c9c9c9);
+    padding: 1em;
+    line-height: 1.25;
+}

@@ -1,0 +1,31 @@
+[book]
+title = "PrimeCell GPIO (PL061)"
+description = "Техническое руководство по контроллеру ввода-вывода общего назначения ARM PrimeCell PL061"
+language = "ru"
+src = "src"
+
+[build]
+build-dir = "book"
+create-missing = false
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+no-section-label = false
+additional-css = ["theme/pl061.css"]
+
+[output.html.search]
+enable = true
+limit-results = 30
+teaser-word-count = 30
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 1
+boost-paragraph = 1
+expand = true
+heading-split-level = 3
+copy-js = true
+
+[output.html.fold]
+enable = false
+level = 1
